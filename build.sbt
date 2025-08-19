@@ -1,4 +1,4 @@
-name := """personal-finances-frontend-dashboard"""
+name := """personal-finances-dashboard-frontend"""
 organization := "com.academy"
 
 version := "1.0-SNAPSHOT"
