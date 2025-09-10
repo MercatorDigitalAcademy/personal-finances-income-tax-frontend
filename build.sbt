@@ -23,10 +23,13 @@ lazy val appName: String = """personal-finances-dashboard-frontend"""
 organization := "com.academy"
 
 ThisBuild / version := "1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "3.3.5"
+ThisBuild / scalaVersion := "2.13.16"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
+resolvers += MavenRepository("HMRC-open-artefacts-maven2", "https://open.artefacts.tax.service.gov.uk/maven2")
+libraryDependencies ++= AppDependencies()
+libraryDependencies ++= Seq(
+  guice
+)
 
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala)
