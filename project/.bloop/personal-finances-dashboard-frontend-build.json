@@ -10,7 +10,8 @@
             "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/src/main/scala-2",
             "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/src/main/java",
             "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/src/main/scala-sbt-1.0",
-            "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/target/scala-2.12/sbt-1.0/src_managed/main"
+            "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/target/scala-2.12/sbt-1.0/src_managed/main",
+            "/Users/lan.nguyen/Learning/personal-finances/personal-finances-dashboard-frontend/project/AppDependencies.scala"
         ],
         "dependencies": [
             
