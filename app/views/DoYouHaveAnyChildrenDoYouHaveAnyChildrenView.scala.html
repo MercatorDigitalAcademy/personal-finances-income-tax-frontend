@@ -1,0 +1,32 @@
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukCheckboxes: GovukCheckboxes,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = title(form, messages("doYouHaveAnyChildrenDoYouHaveAnyChildren.title"))) {
+
+    @formHelper(action = routes.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
+        }
+
+        @govukCheckboxes(
+            CheckboxesViewModel(
+                form   = form,
+                name   = "value",
+                legend = LegendViewModel(messages("doYouHaveAnyChildrenDoYouHaveAnyChildren.heading")).asPageHeading(),
+                items  = DoYouHaveAnyChildrenDoYouHaveAnyChildren.checkboxItems
+            )
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
+    }
+}

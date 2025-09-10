@@ -15,7 +15,8 @@
  *@
 
 @this(
-    layout: templates.Layout
+    layout: templates.Layout,
+    govukButton: GovukButton
 )
 
 @()(implicit request: Request[_], messages: Messages)
@@ -27,5 +28,14 @@
 
     <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
 
+    <h2 class="govuk-heading-xl">@messages("index.title")</h2>
+
+    <h3 class="govuk-heading-l">@messages("index.l1")</h3>
+
     <p class="govuk-body">@messages("index.guidance")</p>
+
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+            .asLink(routes.HomeController.continue().url)
+    )
 }

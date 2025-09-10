@@ -1,0 +1,25 @@
+@this(
+    layout: templates.Layout,
+    govukButton: GovukButton
+)
+
+@()(implicit request: Request[_], messages: Messages)
+
+@layout(
+    pageTitle    = titleNoForm(messages("continue.title")),
+    showBackLink = true
+) {
+
+    <h1 class="govuk-heading-xl">@messages("continue.heading")</h1>
+
+    <h2 class="govuk-heading-xl">@messages("continue.title")</h2>
+
+    <h3 class="govuk-heading-l">@messages("continue.l1")</h3>
+
+    <p class="govuk-body">@messages("continue.guidance")</p>
+
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+            .asLink(routes.HomeController.continue().url)
+    )
+}
