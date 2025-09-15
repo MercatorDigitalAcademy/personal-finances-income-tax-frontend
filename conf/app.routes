@@ -28,8 +28,3 @@ GET         /account/sign-out                            controllers.auth.AuthCo
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad()
-
-GET        /doYouHaveAnyChildren                        controllers.DoYouHaveAnyChildrenController.onPageLoad(mode: Mode = NormalMode)
-POST       /doYouHaveAnyChildren                       controllers.DoYouHaveAnyChildrenController.onSubmit(mode: Mode = NormalMode)
-GET        /changeDoYouHaveAnyChildren               controllers.DoYouHaveAnyChildrenController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeDoYouHaveAnyChildren                controllers.DoYouHaveAnyChildrenController.onSubmit(mode: Mode = CheckMode)

@@ -21,8 +21,8 @@ import sbt.Def
 lazy val appName: String = """personal-finances-dashboard-frontend"""
 organization := "com.academy"
 
-version := "1.0-SNAPSHOT"
-scalaVersion := "2.13.16"
+ThisBuild / version := "1.0-SNAPSHOT"
+ThisBuild / scalaVersion := "2.13.16"
 
 resolvers += MavenRepository(
   "HMRC-open-artefacts-maven2",
@@ -79,7 +79,7 @@ lazy val microservice = (project in file("."))
     retrieveManaged := true
   )
 
-lazy val testSettings: Seq[Def.Setting[?]] = Seq(
+lazy val testSettings: Seq[Def.Setting[_]] = Seq(
   fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )

@@ -18,8 +18,5 @@
 
     <p class="govuk-body">@messages("continue.guidance")</p>
 
-    @govukButton(
-        ButtonViewModel(messages("site.continue"))
-            .asLink(routes.DoYouHaveAnyChildrenController.onPageLoad(NormalMode).url)
-    )
+
 }

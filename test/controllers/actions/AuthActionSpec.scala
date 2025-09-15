@@ -1,4 +1,5 @@
 /*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -218,3 +219,4 @@ class FakeFailingAuthConnector @Inject() (exceptionToReturn: Throwable) extends 
   ): Future[A] =
     Future.failed(exceptionToReturn)
 }
+*/

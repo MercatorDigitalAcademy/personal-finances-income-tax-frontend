@@ -40,9 +40,9 @@ class DateTimeFormatsSpec extends AnyFreeSpec with Matchers {
     }
 
     "must default to English format" in {
-      val formatter = dateTimeFormat()(Lang("de"))
-      val result    = LocalDate.of(2023, 1, 1).format(formatter)
-      result mustEqual "1 January 2023"
+      val formatter = dateTimeFormat()(Lang("xx"))
+      val result    = LocalDate.of(2023, 2, 1).format(formatter)
+      result mustEqual "1 Feb 2023"
     }
   }
 }

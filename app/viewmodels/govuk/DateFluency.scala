@@ -19,7 +19,10 @@ package viewmodels.govuk
 import play.api.data.Field
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
-import uk.gov.hmrc.govukfrontend.views.viewmodels.dateinput.{DateInput, InputItem}
+import uk.gov.hmrc.govukfrontend.views.viewmodels.dateinput.{
+  DateInput,
+  InputItem
+}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.{Fieldset, Legend}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import viewmodels.ErrorMessageAwareness
@@ -31,8 +34,8 @@ trait DateFluency {
   object DateViewModel extends ErrorMessageAwareness {
 
     def apply(
-      field: Field,
-      legend: Legend
+        field: Field,
+        legend: Legend
     )(implicit messages: Messages): DateInput =
       apply(
         field = field,
@@ -40,21 +43,24 @@ trait DateFluency {
       )
 
     def apply(
-      field: Field,
-      fieldset: Fieldset
+        field: Field,
+        fieldset: Fieldset
     )(implicit messages: Messages): DateInput = {
 
       val errorClass = "govuk-input--error"
 
-      val dayError         = field.error.exists(_.args.contains(messages("date.error.day")))
-      val monthError       = field.error.exists(_.args.contains(messages("date.error.month")))
-      val yearError        = field.error.exists(_.args.contains(messages("date.error.year")))
+      val dayError =
+        field.error.exists(_.args.contains(messages("date.error.day")))
+      val monthError =
+        field.error.exists(_.args.contains(messages("date.error.month")))
+      val yearError =
+        field.error.exists(_.args.contains(messages("date.error.year")))
       val anySpecificError = dayError || monthError || yearError
-      val allFieldsError   = field.error.isDefined && !anySpecificError
+      val allFieldsError = field.error.isDefined && !anySpecificError
 
-      val dayErrorClass   = if (dayError || allFieldsError) errorClass else ""
+      val dayErrorClass = if (dayError || allFieldsError) errorClass else ""
       val monthErrorClass = if (monthError || allFieldsError) errorClass else ""
-      val yearErrorClass  = if (yearError || allFieldsError) errorClass else ""
+      val yearErrorClass = if (yearError || allFieldsError) errorClass else ""
 
       val items = Seq(
         InputItem(
