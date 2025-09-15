@@ -5,14 +5,14 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import viewmodels.govuk.checkbox._
 
-sealed trait DoYouHaveAnyChildrenDoYouHaveAnyChildren
+sealed trait DoYouHaveAnyChildren
 
-object DoYouHaveAnyChildrenDoYouHaveAnyChildren extends Enumerable.Implicits {
+object DoYouHaveAnyChildren extends Enumerable.Implicits {
 
-  case object Yes extends WithName("yes") with DoYouHaveAnyChildrenDoYouHaveAnyChildren
-  case object No extends WithName("no") with DoYouHaveAnyChildrenDoYouHaveAnyChildren
+  case object Yes extends WithName("yes") with DoYouHaveAnyChildren
+  case object No extends WithName("no") with DoYouHaveAnyChildren
 
-  val values: Seq[DoYouHaveAnyChildrenDoYouHaveAnyChildren] = Seq(
+  val values: Seq[DoYouHaveAnyChildren] = Seq(
     Yes,
     No
   )
@@ -21,14 +21,14 @@ object DoYouHaveAnyChildrenDoYouHaveAnyChildren extends Enumerable.Implicits {
     values.zipWithIndex.map {
       case (value, index) =>
         CheckboxItemViewModel(
-          content = Text(messages(s"doYouHaveAnyChildrenDoYouHaveAnyChildren.${value.toString}")),
+          content = Text(messages(s"doYouHaveAnyChildren.${value.toString}")),
           fieldId = "value",
           index   = index,
           value   = value.toString
         )
     }
 
-  implicit val enumerable: Enumerable[DoYouHaveAnyChildrenDoYouHaveAnyChildren] =
+  implicit val enumerable: Enumerable[DoYouHaveAnyChildren] =
     Enumerable(values.map(v => v.toString -> v): _*)
 
 }

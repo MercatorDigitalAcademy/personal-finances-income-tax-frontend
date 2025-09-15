@@ -20,6 +20,6 @@
 
     @govukButton(
         ButtonViewModel(messages("site.continue"))
-            .asLink(routes.HomeController.continue().url)
+            .asLink(routes.DoYouHaveAnyChildrenController.onPageLoad(NormalMode).url)
     )
 }

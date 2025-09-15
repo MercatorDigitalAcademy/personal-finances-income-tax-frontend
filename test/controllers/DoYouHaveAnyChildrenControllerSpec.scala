@@ -1,43 +1,43 @@
 package controllers
 
 import base.SpecBase
-import forms.DoYouHaveAnyChildrenDoYouHaveAnyChildrenFormProvider
-import models.{NormalMode, DoYouHaveAnyChildrenDoYouHaveAnyChildren, UserAnswers}
+import forms.DoYouHaveAnyChildrenFormProvider
+import models.{NormalMode, DoYouHaveAnyChildren, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.DoYouHaveAnyChildrenDoYouHaveAnyChildrenPage
+import pages.DoYouHaveAnyChildrenPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.DoYouHaveAnyChildrenDoYouHaveAnyChildrenView
+import views.html.DoYouHaveAnyChildrenView
 
 import scala.concurrent.Future
 
-class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase with MockitoSugar {
+class doYouHaveAnyChildrenControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute = routes.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onPageLoad(NormalMode).url
+  lazy val doYouHaveAnyChildrenRoute = routes.DoYouHaveAnyChildrenController.onPageLoad(NormalMode).url
 
-  val formProvider = new DoYouHaveAnyChildrenDoYouHaveAnyChildrenFormProvider()
+  val formProvider = new DoYouHaveAnyChildrenFormProvider()
   val form = formProvider()
 
-  "DoYouHaveAnyChildrenDoYouHaveAnyChildren Controller" - {
+  "doYouHaveAnyChildren Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
+        val request = FakeRequest(GET, doYouHaveAnyChildrenRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[DoYouHaveAnyChildrenDoYouHaveAnyChildrenView]
+        val view = application.injector.instanceOf[DoYouHaveAnyChildrenView]
 
         status(result) mustEqual OK
 
@@ -47,19 +47,19 @@ class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase wi
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DoYouHaveAnyChildrenDoYouHaveAnyChildrenPage, DoYouHaveAnyChildrenDoYouHaveAnyChildren.values.toSet).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(DoYouHaveAnyChildrenPage, DoYouHaveAnyChildren.values.toSet).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
+        val request = FakeRequest(GET, doYouHaveAnyChildrenRoute)
 
-        val view = application.injector.instanceOf[DoYouHaveAnyChildrenDoYouHaveAnyChildrenView]
+        val view = application.injector.instanceOf[DoYouHaveAnyChildrenView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(DoYouHaveAnyChildrenDoYouHaveAnyChildren.values.toSet), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(DoYouHaveAnyChildren.values.toSet), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -79,8 +79,8 @@ class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase wi
 
       running(application) {
         val request =
-          FakeRequest(POST, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
-            .withFormUrlEncodedBody(("value[0]", DoYouHaveAnyChildrenDoYouHaveAnyChildren.values.head.toString))
+          FakeRequest(POST, doYouHaveAnyChildrenRoute)
+            .withFormUrlEncodedBody(("value[0]", DoYouHaveAnyChildren.values.head.toString))
 
         val result = route(application, request).value
 
@@ -95,12 +95,12 @@ class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase wi
 
       running(application) {
         val request =
-          FakeRequest(POST, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
+          FakeRequest(POST, doYouHaveAnyChildrenRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[DoYouHaveAnyChildrenDoYouHaveAnyChildrenView]
+        val view = application.injector.instanceOf[DoYouHaveAnyChildrenView]
 
         val result = route(application, request).value
 
@@ -114,7 +114,7 @@ class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase wi
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
+        val request = FakeRequest(GET, doYouHaveAnyChildrenRoute)
 
         val result = route(application, request).value
 
@@ -129,8 +129,8 @@ class DoYouHaveAnyChildrenDoYouHaveAnyChildrenControllerSpec extends SpecBase wi
 
       running(application) {
         val request =
-          FakeRequest(POST, doYouHaveAnyChildrenDoYouHaveAnyChildrenRoute)
-            .withFormUrlEncodedBody(("value[0]", DoYouHaveAnyChildrenDoYouHaveAnyChildren.values.head.toString))
+          FakeRequest(POST, doYouHaveAnyChildrenRoute)
+            .withFormUrlEncodedBody(("value[0]", DoYouHaveAnyChildren.values.head.toString))
 
         val result = route(application, request).value
 

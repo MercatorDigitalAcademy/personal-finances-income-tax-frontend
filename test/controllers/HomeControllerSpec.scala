@@ -1,9 +1,11 @@
 package controllers
 
-import org.scalatestplus.play._
-import org.scalatestplus.play.guice._
+import base.SpecBase
 import play.api.test._
 import play.api.test.Helpers._
+import views.html.{ContinueView, IndexView}
+
+import scala.Console.in
 
 /**
  * Add your spec here.
@@ -11,31 +13,35 @@ import play.api.test.Helpers._
  *
  * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
  */
-class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
+class HomeControllerSpec extends SpecBase {
 
-  "HomeController GET" should {
+  val application = applicationBuilder(userAnswers = None).build()
+  lazy val indexView = application.injector.instanceOf[IndexView]
+  lazy val continueView = application.injector.instanceOf[ContinueView]
 
-    "render the index page from a new instance of controller" in {
-      val controller = new HomeController(stubControllerComponents())
-      val home = controller.index().apply(FakeRequest(GET, "/"))
+  "HomeController GET" - {
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
-    }
-
-    "render the index page from the application" in {
-      val controller = inject[HomeController]
-      val home = controller.index().apply(FakeRequest(GET, "/"))
+    "render the index page from a new instance of controller" - {
+      val controller = new HomeController(stubMessagesControllerComponents(), indexView,continueView )
+      val home = controller.onPageLoad().apply(FakeRequest(GET, "/"))
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
       contentAsString(home) must include ("Welcome to Play")
     }
 
-    "render the index page from the router" in {
+    "render the index page from the application" - {
+      val controller = application.injector.instanceOf[HomeController]
+      val home = controller.onPageLoad().apply(FakeRequest(GET, "/"))
+
+      status(home) mustBe OK
+      contentType(home) mustBe Some("text/html")
+      contentAsString(home) must include ("Welcome to Play")
+    }
+
+    "render the index page from the router" - {
       val request = FakeRequest(GET, "/")
-      val home = route(app, request).get
+      val home = route(application, request).get
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")

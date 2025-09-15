@@ -2,7 +2,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.DoYouHaveAnyChildrenDoYouHaveAnyChildrenPage
+import pages.DoYouHaveAnyChildrenPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -10,27 +10,27 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object DoYouHaveAnyChildrenDoYouHaveAnyChildrenSummary  {
+object DoYouHaveAnyChildrenSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DoYouHaveAnyChildrenDoYouHaveAnyChildrenPage).map {
+    answers.get(DoYouHaveAnyChildrenPage).map {
       answers =>
 
         val value = ValueViewModel(
           HtmlContent(
             answers.map {
-              answer => HtmlFormat.escape(messages(s"doYouHaveAnyChildrenDoYouHaveAnyChildren.$answer")).toString
+              answer => HtmlFormat.escape(messages(s"doYouHaveAnyChildren.$answer")).toString
             }
             .mkString(",<br>")
           )
         )
 
         SummaryListRowViewModel(
-          key     = "doYouHaveAnyChildrenDoYouHaveAnyChildren.checkYourAnswersLabel",
+          key     = "doYouHaveAnyChildren.checkYourAnswersLabel",
           value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("doYouHaveAnyChildrenDoYouHaveAnyChildren.change.hidden"))
+            ActionItemViewModel("site.change", routes.DoYouHaveAnyChildrenController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("doYouHaveAnyChildren.change.hidden"))
           )
         )
     }

@@ -18,30 +18,35 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
 
-
 lazy val appName: String = """personal-finances-dashboard-frontend"""
 organization := "com.academy"
 
-ThisBuild / version := "1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.16"
+version := "1.0-SNAPSHOT"
+scalaVersion := "2.13.16"
 
-resolvers += MavenRepository("HMRC-open-artefacts-maven2", "https://open.artefacts.tax.service.gov.uk/maven2")
+resolvers += MavenRepository(
+  "HMRC-open-artefacts-maven2",
+  "https://open.artefacts.tax.service.gov.uk/maven2"
+)
 val dependencies = Seq(
-  "uk.gov.hmrc"          %% "play-frontend-hmrc-play-30"            % "12.7.0",
-  "uk.gov.hmrc"          %% "play-conditional-form-mapping-play-30" % "3.3.0",
-  "uk.gov.hmrc"          %% "bootstrap-frontend-play-30"            % "9.13.0",
-  "uk.gov.hmrc.mongo"    %% "hmrc-mongo-play-30"                    % "2.7.0",
+  "uk.gov.hmrc" %% "play-frontend-hmrc-play-30" % "12.7.0",
+  "uk.gov.hmrc" %% "play-conditional-form-mapping-play-30" % "3.3.0",
+  "uk.gov.hmrc" %% "bootstrap-frontend-play-30" % "9.13.0",
+  "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30" % "2.7.0",
   guice,
-  "org.scalatest"          %% "scalatest"            % "3.2.15" % Test,
-  "org.scalamock"          %% "scalamock"            % "5.2.0"  % Test,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
+  "org.scalamock" %% "scalamock" % "7.5.0" % Test,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test,
+  "org.scalatest" %% "scalatest" % "3.2.18" % Test,
+  "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0"
 )
 
 libraryDependencies ++= dependencies
 
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala)
-  .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
+  .disablePlugins(
+    JUnitXmlReportPlugin
+  ) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(libraryDependencies ++= dependencies)
   .settings(inConfig(Test)(testSettings): _*)
   .settings(ThisBuild / useSuperShell := false)
@@ -74,7 +79,7 @@ lazy val microservice = (project in file("."))
     retrieveManaged := true
   )
 
-lazy val testSettings: Seq[Def.Setting[_]] = Seq(
+lazy val testSettings: Seq[Def.Setting[?]] = Seq(
   fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )
@@ -84,5 +89,7 @@ lazy val it =
     .enablePlugins(PlayScala)
     .dependsOn(microservice % "test->test")
 
-addCommandAlias("runAllChecks", ";clean;compile;scalafmtAll;coverage;test;it/test;scalastyle;coverageReport")
-
+addCommandAlias(
+  "runAllChecks",
+  ";clean;compile;scalafmtAll;coverage;test;it/test;scalastyle;coverageReport"
+)

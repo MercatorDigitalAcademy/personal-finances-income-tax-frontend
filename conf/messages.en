@@ -1,11 +1,11 @@
 
-doYouHaveAnyChildrenDoYouHaveAnyChildren.title = Do You Have Any Children?
-doYouHaveAnyChildrenDoYouHaveAnyChildren.heading = Do You Have Any Children?
-doYouHaveAnyChildrenDoYouHaveAnyChildren.yes = Yes
-doYouHaveAnyChildrenDoYouHaveAnyChildren.no = No
-doYouHaveAnyChildrenDoYouHaveAnyChildren.checkYourAnswersLabel = Do You Have Any Children?
-doYouHaveAnyChildrenDoYouHaveAnyChildren.error.required = Select doYouHaveAnyChildrenDoYouHaveAnyChildren
-doYouHaveAnyChildrenDoYouHaveAnyChildren.change.hidden = DoYouHaveAnyChildrenDoYouHaveAnyChildren
+doYouHaveAnyChildren.title = Do You Have Any Children?
+doYouHaveAnyChildren.heading = Do You Have Any Children?
+doYouHaveAnyChildren.yes = Yes
+doYouHaveAnyChildren.no = No
+doYouHaveAnyChildren.checkYourAnswersLabel = Do You Have Any Children?
+doYouHaveAnyChildren.error.required = Select doYouHaveAnyChildren
+doYouHaveAnyChildren.change.hidden = DoYouHaveAnyChildren
 
 index.heading = Welcome To -
 index.title = Personal Finance Frontend

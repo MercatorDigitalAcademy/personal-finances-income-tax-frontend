@@ -29,7 +29,7 @@ GET         /account/signed-out                          controllers.auth.Signed
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad()
 
-GET        /doYouHaveAnyChildrenDoYouHaveAnyChildren                        controllers.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onPageLoad(mode: Mode = NormalMode)
-POST       /doYouHaveAnyChildrenDoYouHaveAnyChildren                        controllers.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onSubmit(mode: Mode = NormalMode)
-GET        /changeDoYouHaveAnyChildrenDoYouHaveAnyChildren                  controllers.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeDoYouHaveAnyChildrenDoYouHaveAnyChildren                  controllers.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onSubmit(mode: Mode = CheckMode)
+GET        /doYouHaveAnyChildren                       controllers.DoYouHaveAnyChildrenController.onPageLoad(mode: Mode = NormalMode)
+POST       /doYouHaveAnyChildren                     controllers.DoYouHaveAnyChildrenController.onSubmit(mode: Mode = NormalMode)
+GET        /changeDoYouHaveAnyChildren                  controllers.DoYouHaveAnyChildrenController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeDoYouHaveAnyChildren                  controllers.DoYouHaveAnyChildrenController.onSubmit(mode: Mode = CheckMode)

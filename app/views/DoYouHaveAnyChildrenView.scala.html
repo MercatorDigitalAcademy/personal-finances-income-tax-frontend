@@ -8,9 +8,9 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("doYouHaveAnyChildrenDoYouHaveAnyChildren.title"))) {
+@layout(pageTitle = title(form, messages("doYouHaveAnyChildren.title"))) {
 
-    @formHelper(action = routes.DoYouHaveAnyChildrenDoYouHaveAnyChildrenController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = routes.DoYouHaveAnyChildrenController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
@@ -20,8 +20,8 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("doYouHaveAnyChildrenDoYouHaveAnyChildren.heading")).asPageHeading(),
-                items  = DoYouHaveAnyChildrenDoYouHaveAnyChildren.checkboxItems
+                legend = LegendViewModel(messages("doYouHaveAnyChildren.heading")).asPageHeading(),
+                items  = DoYouHaveAnyChildren.checkboxItems
             )
         )
 
