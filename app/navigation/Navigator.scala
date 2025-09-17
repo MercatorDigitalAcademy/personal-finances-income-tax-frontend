@@ -16,18 +16,18 @@
 
 package navigation
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
-import pages._
 import models._
+import pages._
+import play.api.mvc.Call
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case WelcomePage => _ => routes.IndexController.onPageLoad()
+    case WelcomePage => _ => routes.DevLoginController.showLogin()
     case _ => _ => routes.IndexController.onPageLoad()
   }
 

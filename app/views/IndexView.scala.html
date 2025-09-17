@@ -26,9 +26,7 @@
     showBackLink = false
 ) {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
-
-    <h2 class="govuk-heading-xl">@messages("index.title")</h2>
+<h1 class="govuk-heading-xl">@messages("index.title")</h1>
 
     <h3 class="govuk-heading-l">@messages("index.l1")</h3>
 
@@ -36,6 +34,6 @@
 
     @govukButton(
         ButtonViewModel(messages("site.continue"))
-            .asLink(routes.HomeController.continue().url)
+.asLink(routes.DevLoginController.showLogin().url)
     )
 }

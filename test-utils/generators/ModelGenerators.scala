@@ -17,9 +17,17 @@
 package generators
 
 import models._
+import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
+
+  implicit lazy val arbitraryWhatSkillsDoYouThere: Arbitrary[WhatSkillsDoYouThere] =
+    Arbitrary {
+      for {
+        settings <- arbitrary[String]
+        w <- arbitrary[String]
+      } yield WhatSkillsDoYouThere(settings, w)
+    }
 
 }

@@ -34,7 +34,7 @@ trait IdentifierAction
 
 class AuthenticatedIdentifierAction @Inject() (
   override val authConnector: AuthConnector,
-  config: FrontendAppConfig,
+  val config: FrontendAppConfig,
   val parser: BodyParsers.Default
 )(implicit val executionContext: ExecutionContext)
     extends IdentifierAction
@@ -58,6 +58,7 @@ class SessionIdentifierAction @Inject() (
       case Some(session) =>
         block(IdentifierRequest(request, session.value))
       case None          =>
+        Future.successful(Redirect(routes.DevLoginController.showLogin()))
         Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
     }
   }

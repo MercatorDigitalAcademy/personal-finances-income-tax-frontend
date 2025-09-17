@@ -1,17 +1,28 @@
+site.continue = moving on...
 
-doYouHaveAnyChildren.title = Do You Have Any Children?
-doYouHaveAnyChildren.heading = Do You Have Any Children?
-doYouHaveAnyChildren.yes = Yes
-doYouHaveAnyChildren.no = No
-doYouHaveAnyChildren.checkYourAnswersLabel = Do You Have Any Children?
-doYouHaveAnyChildren.error.required = Select doYouHaveAnyChildren
-doYouHaveAnyChildren.change.hidden = DoYouHaveAnyChildren
 
 index.heading = Welcome To -
 index.title = Personal Finance Frontend
-index.l1 = To your destiny!!
+index.l1 = To infinity and beyond...🚀
 index.guidance = This is a Mercator Academy to assist the Academy Department in the upskilling of future cohorts!!
 welcome.title = welcome
 welcome.heading = welcome
 
+devLogin.heading = Dev Login View
+devLogin.title = This is a temporary fake login for development purposes
+devLogin.l1 = This message comes from conf/messages.en devlogin.l1
+devLogin.guidance = Find out where I come from...
 
+
+
+whatSkillsDoYouThere.title = whatSkillsDoYouThere
+whatSkillsDoYouThere.heading = whatSkillsDoYouThere
+whatSkillsDoYouThere.settings = settings
+whatSkillsDoYouThere.w = w
+whatSkillsDoYouThere.checkYourAnswersLabel = WhatSkillsDoYouThere
+whatSkillsDoYouThere.error.settings.required = Enter settings
+whatSkillsDoYouThere.error.w.required = Enter w
+whatSkillsDoYouThere.error.settings.length = settings must be baseDirectory characters or less
+whatSkillsDoYouThere.error.w.length = w must be 100 characters or less
+whatSkillsDoYouThere.settings.change.hidden = settings
+whatSkillsDoYouThere.w.change.hidden = w

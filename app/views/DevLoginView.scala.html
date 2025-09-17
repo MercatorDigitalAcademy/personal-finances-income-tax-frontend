@@ -1,0 +1,31 @@
+@this(
+layout: templates.Layout,
+govukButton: GovukButton
+)
+
+@()(implicit request: Request[_], messages: Messages)
+
+@import helper._
+
+@layout(
+pageTitle    = titleNoForm(messages("index.title")),
+showBackLink = false
+) {
+
+<h1 class="govuk-heading-xl">@messages("devLogin.heading")</h1>
+
+<h2 class="govuk-heading-l">@messages("devLogin.title")</h2>
+
+<h3 class="govuk-heading-m">@messages("devLogin.l1")</h3>
+
+<p class="govuk-body">@messages("devLogin.guidance")</p>
+
+@helper.form(action = routes.DevLoginController.submitLogin()) {
+@CSRF.formField
+<label for="username">Username:</label>
+<input id="username" name="username" type="text">
+<button type="submit">Login</button>
+}
+
+}
+
