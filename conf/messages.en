@@ -13,16 +13,6 @@ devLogin.title = This is a temporary fake login for development purposes
 devLogin.l1 = This message comes from conf/messages.en devlogin.l1
 devLogin.guidance = Find out where I come from...
 
-
-
-whatSkillsDoYouThere.title = whatSkillsDoYouThere
-whatSkillsDoYouThere.heading = whatSkillsDoYouThere
-whatSkillsDoYouThere.settings = settings
-whatSkillsDoYouThere.w = w
-whatSkillsDoYouThere.checkYourAnswersLabel = WhatSkillsDoYouThere
-whatSkillsDoYouThere.error.settings.required = Enter settings
-whatSkillsDoYouThere.error.w.required = Enter w
-whatSkillsDoYouThere.error.settings.length = settings must be baseDirectory characters or less
-whatSkillsDoYouThere.error.w.length = w must be 100 characters or less
-whatSkillsDoYouThere.settings.change.hidden = settings
-whatSkillsDoYouThere.w.change.hidden = w
+continue.heading = This is a Content Page
+continue.title = It contains only information
+continue.l1 = It asks no questions of the user

@@ -24,8 +24,8 @@ class DevLoginController @Inject() (
       _.get("username").flatMap(_.headOption)
     ) match {
       case Some(username) =>
-        Redirect(routes.HomeController.continue())
-          .withSession("userId" -> username) // add username to Play session
+        Redirect(routes.IndexController.onPageLoad())
+          .withSession("userId" -> username)
       case None =>
         Redirect(routes.DevLoginController.showLogin())
           .flashing("error" -> "Please enter a username")

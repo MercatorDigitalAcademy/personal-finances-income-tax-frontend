@@ -31,7 +31,7 @@ lazy val microservice = (project in file("."))
     JUnitXmlReportPlugin
   ) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(libraryDependencies ++= dependencies)
-  .settings(inConfig(Test)(testSettings): _*)
+  .settings(inConfig(Test)(testSettings) *)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     name := appName,
@@ -62,7 +62,7 @@ lazy val microservice = (project in file("."))
     retrieveManaged := true
   )
 
-lazy val testSettings: Seq[Def.Setting[_]] = Seq(
+lazy val testSettings: Seq[Def.Setting[?]] = Seq(
   fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )

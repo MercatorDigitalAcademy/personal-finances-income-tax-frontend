@@ -4,8 +4,7 @@ import javax.inject._
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IndexView
-import views.html.ContinueView
+import views.html.WelcomeView
 
 /** This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
@@ -13,16 +12,12 @@ import views.html.ContinueView
 @Singleton
 class HomeController @Inject() (
     val controllerComponents: MessagesControllerComponents,
-    view1: IndexView,
-    view2: ContinueView
+    view: WelcomeView
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = Action { implicit request =>
-    Ok(view1())
+    Ok(view())
   }
 
-  def continue(): Action[AnyContent] = Action { implicit request =>
-    Ok(view2())
-  }
 }

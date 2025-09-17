@@ -19,10 +19,11 @@ package controllers
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
 import models.UserAnswers
 import play.api.i18n.I18nSupport
+import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IndexView
+import views.html.ContinueView
 
 import javax.inject.Inject
 
@@ -31,12 +32,14 @@ class IndexController @Inject() (
   identify: IdentifierAction,
   sessionRepository: SessionRepository,
   getData: DataRetrievalAction,
-  view: IndexView
+  view: ContinueView
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData) { implicit request =>
     sessionRepository.set(UserAnswers(request.userId))
+    logger.info(s"Session: ${request.session}")
     Ok(view())
   }
+
 }
