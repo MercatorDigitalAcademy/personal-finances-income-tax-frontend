@@ -16,3 +16,44 @@ devLogin.guidance = Find out where I come from...
 continue.heading = This is a Content Page
 continue.title = It contains only information
 continue.l1 = It asks no questions of the user
+
+start.title = This is the start of the Benefits Journey
+start.heading = This is the start of the Benefits Journey
+
+isUserClaimingChb.title = isUserClaimingChb
+isUserClaimingChb.heading = isUserClaimingChb
+isUserClaimingChb.checkYourAnswersLabel = isUserClaimingChb
+isUserClaimingChb.error.required = Select yes if isUserClaimingChb
+isUserClaimingChb.change.hidden = IsUserClaimingChb
+
+addAChild.title = addAChild
+addAChild.heading = addAChild
+addAChild.checkYourAnswersLabel = addAChild
+addAChild.error.required = Select yes if addAChild
+addAChild.change.hidden = AddAChild
+
+childsName.title = childsName
+childsName.heading = childsName
+childsName.checkYourAnswersLabel = childsName
+childsName.error.required = Enter childsName
+childsName.error.length = ChildsName must be 70 characters or less
+childsName.change.hidden = ChildsName
+
+childsBirthDate.title = Please enter the child's Date of Birth
+childsBirthDate.heading = ChildsBirthDate
+childsBirthDate.hint = For example, 22 05 2007.
+childsBirthDate.checkYourAnswersLabel = ChildsBirthDate
+childsBirthDate.error.required.all = Enter the childsBirthDate
+childsBirthDate.error.required.two = The childsBirthDate must include {0} and {1}
+childsBirthDate.error.required = The childsBirthDate must include {0}
+childsBirthDate.error.invalid = Enter a real ChildsBirthDate
+childsBirthDate.change.hidden = ChildsBirthDate
+
+isEntitledToDla.title = At which rate is the child receiving Disability Living Allowance
+isEntitledToDla.heading = At which rate is the child receiving Disability Living Allowance
+isEntitledToDla.higher = Higher Rate
+isEntitledToDla.middle = Middle Rate
+isEntitledToDla.lower = Lower Rate
+isEntitledToDla.checkYourAnswersLabel = Is the rate correct for this child?
+isEntitledToDla.error.required = Select isEntitledToDla
+isEntitledToDla.change.hidden = IsEntitledToDla

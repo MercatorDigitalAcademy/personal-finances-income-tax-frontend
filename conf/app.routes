@@ -31,3 +31,30 @@ GET         /unauthorised                                controllers.Unauthorise
 # Dev login
 GET     /dev-login            controllers.DevLoginController.showLogin()
 POST    /dev-login            controllers.DevLoginController.submitLogin()
+
+GET        /start                       controllers.StartController.onPageLoad()
+
+GET        /isUserClaimingChb                        controllers.IsUserClaimingChbController.onPageLoad(mode: Mode = NormalMode)
+POST       /isUserClaimingChb                        controllers.IsUserClaimingChbController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsUserClaimingChb                  controllers.IsUserClaimingChbController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsUserClaimingChb                  controllers.IsUserClaimingChbController.onSubmit(mode: Mode = CheckMode)
+
+GET        /addAChild                        controllers.AddAChildController.onPageLoad(mode: Mode = NormalMode)
+POST       /addAChild                        controllers.AddAChildController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAddAChild                  controllers.AddAChildController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAddAChild                  controllers.AddAChildController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childsName                        controllers.ChildsNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /childsName                        controllers.ChildsNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildsName                  controllers.ChildsNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildsName                  controllers.ChildsNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childsBirthDate                  controllers.ChildsBirthDateController.onPageLoad(mode: Mode = NormalMode)
+POST       /childsBirthDate                  controllers.ChildsBirthDateController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildsBirthDate                        controllers.ChildsBirthDateController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildsBirthDate                        controllers.ChildsBirthDateController.onSubmit(mode: Mode = CheckMode)
+
+GET        /isEntitledToDla                        controllers.IsEntitledToDlaController.onPageLoad(mode: Mode = NormalMode)
+POST       /isEntitledToDla                        controllers.IsEntitledToDlaController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsEntitledToDla                  controllers.IsEntitledToDlaController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsEntitledToDla                  controllers.IsEntitledToDlaController.onSubmit(mode: Mode = CheckMode)
