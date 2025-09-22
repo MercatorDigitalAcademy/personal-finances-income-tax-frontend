@@ -8,9 +8,10 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("isEntitledToDla.title"))) {
+@layout(pageTitle = title(form, messages("dlaRate.title"))) {
 
-    @formHelper(action = routes.IsEntitledToDlaController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+
+    @formHelper(action = routes.DlaRateController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
@@ -19,8 +20,8 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("isEntitledToDla.heading")).asPageHeading(),
-                items  = IsEntitledToDla.options
+                legend = LegendViewModel(messages("dlaRate.heading")).asPageHeading(),
+                items  = DlaRate.options
             )
         )
 

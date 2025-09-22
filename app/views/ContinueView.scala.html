@@ -16,7 +16,11 @@
 
     <h3 class="govuk-heading-l">@messages("continue.l1")</h3>
 
-    <p class="govuk-body">@messages("continue.guidance")</p>
+
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+        .asLink(routes.StartController.onPageLoad().url)
+    )
 
 
 }

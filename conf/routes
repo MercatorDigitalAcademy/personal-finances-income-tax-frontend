@@ -7,27 +7,59 @@
 
 ->          /hmrc-frontend                               hmrcfrontend.Routes
 
-GET     /                           controllers.HomeController.onPageLoad()
-GET     /continue                           controllers.IndexController.onPageLoad()
+GET        /                                            controllers.HomeController.onPageLoad()
+GET        /continue                                    controllers.IndexController.onPageLoad()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /index                                        controllers.IndexController.onPageLoad()
+GET        /index                                       controllers.IndexController.onPageLoad()
 
-GET         /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET         /refresh-session                             controllers.KeepAliveController.keepAlive()
+GET        /refresh-session                             controllers.KeepAliveController.keepAlive()
 
-GET         /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
+GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET         /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad()
+GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad()
 
-GET         /account/sign-out                            controllers.auth.AuthController.signOut()
-GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
+GET        /account/sign-out                            controllers.auth.AuthController.signOut()
+GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
 
-GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad()
+GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
 
 # Dev login
-GET     /dev-login            controllers.DevLoginController.showLogin()
-POST    /dev-login            controllers.DevLoginController.submitLogin()
+GET        /dev-login                                    controllers.DevLoginController.showLogin()
+POST       /dev-login                                    controllers.DevLoginController.submitLogin()
+
+GET        /start                                        controllers.StartController.onPageLoad()
+
+GET        /isUserClaimingChb                            controllers.IsUserClaimingChbController.onPageLoad(mode: Mode = NormalMode)
+POST       /isUserClaimingChb                            controllers.IsUserClaimingChbController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIsUserClaimingChb                      controllers.IsUserClaimingChbController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIsUserClaimingChb                      controllers.IsUserClaimingChbController.onSubmit(mode: Mode = CheckMode)
+
+GET        /addAChild                                    controllers.AddAChildController.onPageLoad(mode: Mode = NormalMode)
+POST       /addAChild                                    controllers.AddAChildController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAddAChild                              controllers.AddAChildController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAddAChild                              controllers.AddAChildController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childsName                                   controllers.ChildsNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /childsName                                   controllers.ChildsNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildsName                             controllers.ChildsNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildsName                             controllers.ChildsNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childsBirthDate                              controllers.ChildsBirthDateController.onPageLoad(mode: Mode = NormalMode)
+POST       /childsBirthDate                              controllers.ChildsBirthDateController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildsBirthDate                        controllers.ChildsBirthDateController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildsBirthDate                        controllers.ChildsBirthDateController.onSubmit(mode: Mode = CheckMode)
+
+GET        /dlaRate                                      controllers.DlaRateController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /dlaRate                                      controllers.DlaRateController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+GET        /changeDlaRate                                controllers.DlaRateController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /changeDlaRate                                controllers.DlaRateController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+
+GET        /qualifiesForDla                        controllers.QualifiesForDlaController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /qualifiesForDla                        controllers.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+GET        /changeQualifiesForDla                  controllers.QualifiesForDlaController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /changeQualifiesForDla                  controllers.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)

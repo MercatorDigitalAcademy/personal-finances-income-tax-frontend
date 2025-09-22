@@ -1,22 +1,22 @@
 package forms
 
 import forms.behaviours.OptionFieldBehaviours
-import models.IsEntitledToDla
+import models.DlaRate
 import play.api.data.FormError
 
-class IsEntitledToDlaFormProviderSpec extends OptionFieldBehaviours {
+class DlaRateFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new IsEntitledToDlaFormProvider()()
+  val form = new DlaRateFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
-    val requiredKey = "isEntitledToDla.error.required"
+    val requiredKey = "dlaRate.error.required"
 
-    behave like optionsField[IsEntitledToDla](
+    behave like optionsField[DlaRate](
       form,
       fieldName,
-      validValues  = IsEntitledToDla.values,
+      validValues  = DlaRate.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

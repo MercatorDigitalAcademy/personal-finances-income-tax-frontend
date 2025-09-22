@@ -27,8 +27,29 @@ import javax.inject.{Inject, Singleton}
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case WelcomePage => _ => routes.DevLoginController.showLogin()
-    case _ => _ => routes.HomeController.onPageLoad()
+    case WelcomePage           => _ => routes.DevLoginController.showLogin()
+    case StartPage             => _ => routes.IsUserClaimingChbController.onPageLoad(NormalMode)
+    case IsUserClaimingChbPage => _ => routes.ChildsNameController.onPageLoad(NormalMode)
+
+    case AddAChildPage =>
+      ua =>
+        ua.get(AddAChildPage) match {
+          case Some(true)  => routes.ChildsNameController.onPageLoad(NormalMode)
+          case Some(false) => routes.CheckYourAnswersController.onPageLoad()
+          case None        => routes.HomeController.onPageLoad()  //TODO lan redirect to sessionExpirecontroller when made
+        }
+
+    case ChildsNamePage      => _ => routes.ChildsBirthDateController.onPageLoad(NormalMode)
+    case ChildsBirthDatePage => _ => routes.QualifiesForDlaController.onPageLoad()
+    case QualifiesForDlaPage =>
+      ua =>
+        ua.get(QualifiesForDlaPage) match {
+          case Some(true)  => routes.DlaRateController.onPageLoad()
+          case Some(false) => routes.CheckYourAnswersController.onPageLoad()
+          case None        => routes.HomeController.onPageLoad()
+        }
+    case DlaRatePage => _ => routes.AddAChildController.onPageLoad()
+    case _                   => _ => routes.HomeController.onPageLoad()
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -36,9 +57,7 @@ class Navigator @Inject() () {
   }
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
-    case NormalMode =>
-      normalRoutes(page)(userAnswers)
-    case CheckMode  =>
-      checkRouteMap(page)(userAnswers)
+    case NormalMode => normalRoutes(page)(userAnswers)
+    case CheckMode  => checkRouteMap(page)(userAnswers)
   }
 }

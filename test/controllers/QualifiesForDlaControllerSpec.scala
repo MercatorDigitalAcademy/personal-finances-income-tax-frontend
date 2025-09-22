@@ -1,43 +1,43 @@
 package controllers
 
 import base.SpecBase
-import forms.IsEntitledToDlaFormProvider
-import models.{NormalMode, IsEntitledToDla, UserAnswers}
+import forms.QualifiesForDlaFormProvider
+import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.IsEntitledToDlaPage
+import pages.QualifiesForDlaPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.IsEntitledToDlaView
+import views.html.QualifiesForDlaView
 
 import scala.concurrent.Future
 
-class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
+class QualifiesForDlaControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val isEntitledToDlaRoute = routes.IsEntitledToDlaController.onPageLoad(NormalMode).url
-
-  val formProvider = new IsEntitledToDlaFormProvider()
+  val formProvider = new QualifiesForDlaFormProvider()
   val form = formProvider()
 
-  "IsEntitledToDla Controller" - {
+  lazy val qualifiesForDlaRoute = routes.QualifiesForDlaController.onPageLoad(NormalMode).url
+
+  "QualifiesForDla Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, isEntitledToDlaRoute)
+        val request = FakeRequest(GET, qualifiesForDlaRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[IsEntitledToDlaView]
+        val view = application.injector.instanceOf[QualifiesForDlaView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -46,19 +46,19 @@ class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IsEntitledToDlaPage, IsEntitledToDla.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(QualifiesForDlaPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, isEntitledToDlaRoute)
+        val request = FakeRequest(GET, qualifiesForDlaRoute)
 
-        val view = application.injector.instanceOf[IsEntitledToDlaView]
+        val view = application.injector.instanceOf[QualifiesForDlaView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(IsEntitledToDla.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,8 +78,8 @@ class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isEntitledToDlaRoute)
-            .withFormUrlEncodedBody(("value", IsEntitledToDla.values.head.toString))
+          FakeRequest(POST, qualifiesForDlaRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
@@ -94,12 +94,12 @@ class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isEntitledToDlaRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+          FakeRequest(POST, qualifiesForDlaRoute)
+            .withFormUrlEncodedBody(("value", ""))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[IsEntitledToDlaView]
+        val view = application.injector.instanceOf[QualifiesForDlaView]
 
         val result = route(application, request).value
 
@@ -113,7 +113,7 @@ class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, isEntitledToDlaRoute)
+        val request = FakeRequest(GET, qualifiesForDlaRoute)
 
         val result = route(application, request).value
 
@@ -122,19 +122,18 @@ class IsEntitledToDlaControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, isEntitledToDlaRoute)
-            .withFormUrlEncodedBody(("value", IsEntitledToDla.values.head.toString))
+          FakeRequest(POST, qualifiesForDlaRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }

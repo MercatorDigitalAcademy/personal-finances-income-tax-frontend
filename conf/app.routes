@@ -41,8 +41,8 @@ POST       /changeIsUserClaimingChb                  controllers.IsUserClaimingC
 
 GET        /addAChild                        controllers.AddAChildController.onPageLoad(mode: Mode = NormalMode)
 POST       /addAChild                        controllers.AddAChildController.onSubmit(mode: Mode = NormalMode)
-GET        /changeAddAChild                  controllers.AddAChildController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeAddAChild                  controllers.AddAChildController.onSubmit(mode: Mode = CheckMode)
+GET        /changeAddAChild                  controllers.AddAChildController.onPageLoad(mode: Mode = NormalMode)
+POST       /changeAddAChild                  controllers.AddAChildController.onSubmit(mode: Mode = NormalMode)
 
 GET        /childsName                        controllers.ChildsNameController.onPageLoad(mode: Mode = NormalMode)
 POST       /childsName                        controllers.ChildsNameController.onSubmit(mode: Mode = NormalMode)
@@ -54,7 +54,12 @@ POST       /childsBirthDate                  controllers.ChildsBirthDateControll
 GET        /changeChildsBirthDate                        controllers.ChildsBirthDateController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeChildsBirthDate                        controllers.ChildsBirthDateController.onSubmit(mode: Mode = CheckMode)
 
-GET        /isEntitledToDla                        controllers.IsEntitledToDlaController.onPageLoad(mode: Mode = NormalMode)
-POST       /isEntitledToDla                        controllers.IsEntitledToDlaController.onSubmit(mode: Mode = NormalMode)
-GET        /changeIsEntitledToDla                  controllers.IsEntitledToDlaController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeIsEntitledToDla                  controllers.IsEntitledToDlaController.onSubmit(mode: Mode = CheckMode)
+GET        /dlaRate                        controllers.DlaRateController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /dlaRate                        controllers.DlaRateController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+GET        /changeDlaRate                  controllers.DlaRateController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /changeDlaRate                  controllers.DlaRateController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+
+GET        /qualifiesForDla                        controllers.QualifiesForDlaController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /qualifiesForDla                        controllers.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+GET        /changeQualifiesForDla                  controllers.QualifiesForDlaController.onPageLoad(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)
+POST       /changeQualifiesForDla                  controllers.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, maybeIndex: Option[Int] = None)

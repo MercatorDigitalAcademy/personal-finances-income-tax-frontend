@@ -8,40 +8,40 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.libs.json.{JsError, JsString, Json}
 
-class IsEntitledToDlaSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class DlaRateSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
 
-  "IsEntitledToDla" - {
+  "DlaRate" - {
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(IsEntitledToDla.values.toSeq)
+      val gen = Gen.oneOf(DlaRate.values.toSeq)
 
       forAll(gen) {
-        isEntitledToDla =>
+        dlaRate =>
 
-          JsString(isEntitledToDla.toString).validate[IsEntitledToDla].asOpt.value mustEqual isEntitledToDla
+          JsString(dlaRate.toString).validate[DlaRate].asOpt.value mustEqual dlaRate
       }
     }
 
     "must fail to deserialise invalid values" in {
 
-      val gen = arbitrary[String] suchThat (!IsEntitledToDla.values.map(_.toString).contains(_))
+      val gen = arbitrary[String] suchThat (!DlaRate.values.map(_.toString).contains(_))
 
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[IsEntitledToDla] mustEqual JsError("error.invalid")
+          JsString(invalidValue).validate[DlaRate] mustEqual JsError("error.invalid")
       }
     }
 
     "must serialise" in {
 
-      val gen = Gen.oneOf(IsEntitledToDla.values.toSeq)
+      val gen = Gen.oneOf(DlaRate.values.toSeq)
 
       forAll(gen) {
-        isEntitledToDla =>
+        dlaRate =>
 
-          Json.toJson(isEntitledToDla) mustEqual JsString(isEntitledToDla.toString)
+          Json.toJson(dlaRate) mustEqual JsString(dlaRate.toString)
       }
     }
   }

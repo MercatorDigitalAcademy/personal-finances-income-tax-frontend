@@ -4,27 +4,27 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-sealed trait IsEntitledToDla
+sealed trait DlaRate
 
-object IsEntitledToDla extends Enumerable.Implicits {
+object DlaRate extends Enumerable.Implicits {
 
-  case object Higher extends WithName("higher") with IsEntitledToDla
-  case object Middle extends WithName("middle") with IsEntitledToDla
-  case object Lower extends WithName("middle") with IsEntitledToDla
+  case object Higher extends WithName("higher") with DlaRate
+  case object Middle extends WithName("middle") with DlaRate
+  case object Lower extends WithName("middle") with DlaRate
 
-  val values: Seq[IsEntitledToDla] = Seq(
+  val values: Seq[DlaRate] = Seq(
     Higher, Middle, Lower
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
     case (value, index) =>
       RadioItem(
-        content = Text(messages(s"isEntitledToDla.${value.toString}")),
+        content = Text(messages(s"dlaRate.${value.toString}")),
         value   = Some(value.toString),
         id      = Some(s"value_$index")
       )
   }
 
-  implicit val enumerable: Enumerable[IsEntitledToDla] =
+  implicit val enumerable: Enumerable[DlaRate] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }

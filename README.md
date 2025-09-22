@@ -1,5 +1,16 @@
 # personal-finances-dashboard
 
+#### Runs on localhost: 9005
+
+### Fake login service
+
+- In order to use the fakeLogin Service in developer mode run with
+
+```shell
+sbt run -Dconfig.resource=application.dev.conf
+```
+
+
 
 ### To use g8Scaffold
 

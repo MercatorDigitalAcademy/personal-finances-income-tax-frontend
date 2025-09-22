@@ -49,11 +49,17 @@ childsBirthDate.error.required = The childsBirthDate must include {0}
 childsBirthDate.error.invalid = Enter a real ChildsBirthDate
 childsBirthDate.change.hidden = ChildsBirthDate
 
-isEntitledToDla.title = At which rate is the child receiving Disability Living Allowance
-isEntitledToDla.heading = At which rate is the child receiving Disability Living Allowance
-isEntitledToDla.higher = Higher Rate
-isEntitledToDla.middle = Middle Rate
-isEntitledToDla.lower = Lower Rate
-isEntitledToDla.checkYourAnswersLabel = Is the rate correct for this child?
-isEntitledToDla.error.required = Select isEntitledToDla
-isEntitledToDla.change.hidden = IsEntitledToDla
+dlaRate.title = At which rate is the child receiving Disability Living Allowance
+dlaRate.heading = At which rate is the child receiving Disability Living Allowance
+dlaRate.higher = Higher Rate
+dlaRate.middle = Middle Rate
+dlaRate.lower = Lower Rate
+dlaRate.checkYourAnswersLabel = Is the rate correct for this child?
+dlaRate.error.required = Select DlaRate
+dlaRate.change.hidden = DlaRate
+
+qualifiesForDla.title = qualifiesForDla
+qualifiesForDla.heading = qualifiesForDla
+qualifiesForDla.checkYourAnswersLabel = qualifiesForDla
+qualifiesForDla.error.required = Select yes if qualifiesForDla
+qualifiesForDla.change.hidden = QualifiesForDla
