@@ -16,9 +16,10 @@
 
 package forms.behaviours
 
+import generators.Generators
 import play.api.data.{Form, FormError}
 
-trait CurrencyFieldBehaviours extends FieldBehaviours {
+trait CurrencyFieldBehaviours extends FieldBehaviours with Generators {
 
   def currencyField(
                      form: Form[_],

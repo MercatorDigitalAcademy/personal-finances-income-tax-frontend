@@ -10,7 +10,7 @@ object DlaRate extends Enumerable.Implicits {
 
   case object Higher extends WithName("higher") with DlaRate
   case object Middle extends WithName("middle") with DlaRate
-  case object Lower extends WithName("middle") with DlaRate
+  case object Lower extends WithName("lower") with DlaRate
 
   val values: Seq[DlaRate] = Seq(
     Higher, Middle, Lower

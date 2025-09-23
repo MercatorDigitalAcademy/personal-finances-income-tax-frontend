@@ -16,9 +16,10 @@
 
 package forms.behaviours
 
+import generators.Generators
 import play.api.data.{Form, FormError}
 
-trait StringFieldBehaviours extends FieldBehaviours {
+trait StringFieldBehaviours extends FieldBehaviours with Generators{
 
     def fieldWithMaxLength(form: Form[_],
                            fieldName: String,

@@ -16,13 +16,14 @@
 
 package forms.behaviours
 
+import generators.Generators
 import org.scalacheck.Gen
 import play.api.data.{Form, FormError}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class DateBehaviours extends FieldBehaviours {
+class DateBehaviours extends FieldBehaviours with Generators{
 
   def dateField(form: Form[_], key: String, validData: Gen[LocalDate]): Unit = {
 

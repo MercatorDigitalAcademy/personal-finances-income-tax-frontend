@@ -16,12 +16,20 @@
 
 package forms.behaviours
 
-import forms.FormSpec
 import play.api.data.{Form, FormError}
+
 
 trait BooleanFieldBehaviours extends FieldBehaviours {
 
-  def booleanField(form: Form[_],
+  val nonBooleans = Table(
+    "nonBoolean",
+    "yes",
+    "no",
+    "123",
+    "maybe"
+  )
+
+  def booleanField(form: Form[Boolean],
                    fieldName: String,
                    invalidError: FormError): Unit = {
 
@@ -39,10 +47,9 @@ trait BooleanFieldBehaviours extends FieldBehaviours {
 
     "not bind non-booleans" in {
 
-      forAll(nonBooleans -> "nonBoolean") {
-        nonBoolean =>
-          val result = form.bind(Map(fieldName -> nonBoolean)).apply(fieldName)
-          result.errors mustBe Seq(invalidError)
+      forAll(nonBooleans) { nonBoolean =>
+        val result = form.bind(Map(fieldName -> nonBoolean)).apply(fieldName)
+        result.errors mustBe Seq(invalidError)
       }
     }
   }

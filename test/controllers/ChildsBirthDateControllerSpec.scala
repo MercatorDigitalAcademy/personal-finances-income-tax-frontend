@@ -1,7 +1,6 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.ChildsBirthDateFormProvider
 import models.{NormalMode, UserAnswers}
@@ -12,28 +11,46 @@ import org.scalatestplus.mockito.MockitoSugar
 import pages.ChildsBirthDatePage
 import play.api.i18n.Messages
 import play.api.inject.bind
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import utils.TestObjectsBenefits
 import views.html.ChildsBirthDateView
 
 import scala.concurrent.Future
 
-class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar {
+class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with TestObjectsBenefits {
 
   private implicit val messages: Messages = stubMessages()
 
   private val formProvider = new ChildsBirthDateFormProvider()
   private def form = formProvider()
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/qualifiesForDla")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
   lazy val childsBirthDateRoute = routes.ChildsBirthDateController.onPageLoad(NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
+
+  val json: JsObject = Json.obj(
+    "data" -> Json.obj(
+      "isUserClaimingChb" -> true,
+      "children" -> Json.arr(
+        Json.obj(
+          "name" -> "First Child",
+          "dateOfBirth" -> "2020-12-12",
+          "qualifiesForDla" -> true,
+          "dlaRate" -> "higher"
+        )
+      )
+    )
+  )
+
+  val userAnswers = UserAnswers(userAnswersId, json)
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, childsBirthDateRoute)
@@ -46,11 +63,15 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar {
         "value.year"  -> validAnswer.getYear.toString
       )
 
+  val childsName: String = childList.head.name
+  val thisChild: String = "this child."
+
   "ChildsBirthDate Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val message: String = s"What is $childsName's date of birth'"
 
       running(application) {
         val result = route(application, getRequest()).value
@@ -58,7 +79,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[ChildsBirthDateView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(), messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, thisChild)(getRequest(), messages(application)).toString
       }
     }
 
@@ -74,7 +95,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest(), messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, thisChild)(getRequest(), messages(application)).toString
       }
     }
 
@@ -116,7 +137,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, thisChild)(request, messages(application)).toString
       }
     }
 

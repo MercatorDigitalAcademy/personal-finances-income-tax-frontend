@@ -16,9 +16,10 @@
 
 package forms.behaviours
 
+import generators.Generators
 import play.api.data.{Form, FormError}
 
-class OptionFieldBehaviours extends FieldBehaviours {
+class OptionFieldBehaviours extends FieldBehaviours with Generators {
 
   def optionsField[T](form: Form[_],
                       fieldName: String,

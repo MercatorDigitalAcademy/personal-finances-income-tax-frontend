@@ -16,9 +16,10 @@
 
 package forms.behaviours
 
+import generators.Generators
 import play.api.data.{Form, FormError}
 
-trait IntFieldBehaviours extends FieldBehaviours {
+trait IntFieldBehaviours extends FieldBehaviours with Generators {
 
   def intField(form: Form[_],
                fieldName: String,

@@ -1,9 +1,10 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import generators.Generators
 import play.api.data.FormError
 
-class ChildsNameFormProviderSpec extends StringFieldBehaviours {
+class ChildsNameFormProviderSpec extends StringFieldBehaviours with Generators {
 
   val requiredKey = "childsName.error.required"
   val lengthKey = "childsName.error.length"

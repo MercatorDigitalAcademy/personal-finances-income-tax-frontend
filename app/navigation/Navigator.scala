@@ -49,7 +49,7 @@ class Navigator @Inject() () {
           case None        => routes.HomeController.onPageLoad()
         }
     case DlaRatePage => _ => routes.AddAChildController.onPageLoad()
-    case _                   => _ => routes.AddAChildController.onPageLoad()
+    case _                   => _ => routes.HomeController.onPageLoad()
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {

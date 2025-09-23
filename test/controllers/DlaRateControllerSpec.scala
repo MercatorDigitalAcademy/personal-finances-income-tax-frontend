@@ -19,9 +19,9 @@ import scala.concurrent.Future
 
 class DlaRateControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/addAChild")
 
-  lazy val dlaRateRoute = routes.DlaRateController.onPageLoad(NormalMode).url
+  lazy val dlaRateRoute = routes.DlaRateController.onPageLoad().url
 
   val formProvider = new DlaRateFormProvider()
   val form = formProvider()
