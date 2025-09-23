@@ -29,7 +29,7 @@ class Navigator @Inject() () {
   private val normalRoutes: Page => UserAnswers => Call = {
     case WelcomePage           => _ => routes.DevLoginController.showLogin()
     case StartPage             => _ => routes.IsUserClaimingChbController.onPageLoad(NormalMode)
-    case IsUserClaimingChbPage => _ => routes.ChildsNameController.onPageLoad(NormalMode)
+    case IsUserClaimingChbPage => _ => routes.AddAChildController.onPageLoad()
 
     case AddAChildPage =>
       ua =>
@@ -49,7 +49,7 @@ class Navigator @Inject() () {
           case None        => routes.HomeController.onPageLoad()
         }
     case DlaRatePage => _ => routes.AddAChildController.onPageLoad()
-    case _                   => _ => routes.HomeController.onPageLoad()
+    case _                   => _ => routes.AddAChildController.onPageLoad()
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {

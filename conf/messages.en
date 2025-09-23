@@ -1,5 +1,6 @@
 site.continue = moving on...
-
+site.yes = Yes
+site.no = No
 
 index.heading = Welcome To -
 index.title = Personal Finance Frontend
@@ -20,27 +21,27 @@ continue.l1 = It asks no questions of the user
 start.title = This is the start of the Benefits Journey
 start.heading = This is the start of the Benefits Journey
 
-isUserClaimingChb.title = isUserClaimingChb
-isUserClaimingChb.heading = isUserClaimingChb
+isUserClaimingChb.title = Would you like to calculate your family benefits entitlements?
+isUserClaimingChb.heading = Would you like to calculate your family benefits entitlements?
 isUserClaimingChb.checkYourAnswersLabel = isUserClaimingChb
 isUserClaimingChb.error.required = Select yes if isUserClaimingChb
 isUserClaimingChb.change.hidden = IsUserClaimingChb
 
 addAChild.title = addAChild
-addAChild.heading = addAChild
+addAChild.heading = Would you like to add a child?
 addAChild.checkYourAnswersLabel = addAChild
 addAChild.error.required = Select yes if addAChild
 addAChild.change.hidden = AddAChild
 
-childsName.title = childsName
-childsName.heading = childsName
+childsName.title = Please enter the full name for this child.
+childsName.heading = Please enter the full name for this child.
 childsName.checkYourAnswersLabel = childsName
-childsName.error.required = Enter childsName
-childsName.error.length = ChildsName must be 70 characters or less
-childsName.change.hidden = ChildsName
+childsName.error.required = Enter the childs Name
+childsName.error.length = Childs Name must be 70 characters or less
+childsName.change.hidden = Childs Name
 
 childsBirthDate.title = Please enter the child's Date of Birth
-childsBirthDate.heading = ChildsBirthDate
+childsBirthDate.heading = What is {0}''s date of Birth?
 childsBirthDate.hint = For example, 22 05 2007.
 childsBirthDate.checkYourAnswersLabel = ChildsBirthDate
 childsBirthDate.error.required.all = Enter the childsBirthDate
@@ -58,8 +59,9 @@ dlaRate.checkYourAnswersLabel = Is the rate correct for this child?
 dlaRate.error.required = Select DlaRate
 dlaRate.change.hidden = DlaRate
 
-qualifiesForDla.title = qualifiesForDla
-qualifiesForDla.heading = qualifiesForDla
+qualifiesForDla.title = Is this Child receiving Disability Living Allowance?
+qualifiesForDla.heading = Is this Child receiving Disability Living Allowance?
 qualifiesForDla.checkYourAnswersLabel = qualifiesForDla
 qualifiesForDla.error.required = Select yes if qualifiesForDla
 qualifiesForDla.change.hidden = QualifiesForDla
+

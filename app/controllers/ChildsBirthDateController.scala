@@ -2,10 +2,11 @@ package controllers
 
 import controllers.actions._
 import forms.ChildsBirthDateFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.ChildsBirthDatePage
+import pages.{ChildsBirthDatePage, ChildsNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -35,18 +36,21 @@ class ChildsBirthDateController @Inject()(
         case None => form
         case Some(value) => form.fill(value)
       }
+      val childsName: String = request.userAnswers.get(ChildsNamePage).getOrElse("this child.")
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, childsName))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       val form = formProvider()
+      val childsName: String = request.userAnswers.get(ChildsNamePage).getOrElse("this child" +
+        ".")
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode, childsName))),
 
         value =>
           for {

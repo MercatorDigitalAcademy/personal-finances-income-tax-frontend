@@ -6,16 +6,14 @@ import models.requests.DataRequest
 import models.{Child, DlaRate, Mode, UserAnswers}
 import navigation.Navigator
 import pages.{AddAChildPage, ChildGroup, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, QualifiesForDlaPage}
-import play.api.i18n.Lang.logger
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.Results.{InternalServerError, Redirect}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DlaRateView
-
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
 
 class DlaRateController @Inject()(
                                        override val messagesApi: MessagesApi,
@@ -49,11 +47,11 @@ class DlaRateController @Inject()(
           Future.successful(BadRequest(view(formWithErrors, mode))),
         dlaRate => {
           request.userAnswers.set(DlaRatePage, dlaRate) match {
-            case scala.util.Success(updatedUa) =>
-              // ✅ Final step for this child (qualifiesForDLA = true)
+            case Success(updatedUa) => {
               finalizeChild(updatedUa, mode, maybeIndex, dlaRateOpt = Some(dlaRate))
-
-            case scala.util.Failure(_) =>
+              Future.successful(Redirect(routes.AddAChildController.onPageLoad()))
+            }
+            case Failure(_) =>
               Future.successful(InternalServerError("Could not save DLA rate"))
           }
         }
@@ -92,25 +90,25 @@ class DlaRateController @Inject()(
         }
 
         ua.set(ChildGroup, updatedChildren) match {
-          case scala.util.Success(uaWithChildren) =>
-            val cleanedTry = uaWithChildren
+          case Success(uaWithChildren) =>
+            val cleanedTry: Try[UserAnswers] = uaWithChildren
               .remove(ChildsNamePage)
               .flatMap(_.remove(ChildsBirthDatePage))
               .flatMap(_.remove(QualifiesForDlaPage))
               .flatMap(_.remove(DlaRatePage))
 
             cleanedTry match {
-              case scala.util.Success(cleanedUa: UserAnswers) =>
+              case Success(cleanedUa: UserAnswers) =>
                 sessionRepository.set(cleanedUa).map { _ =>
                   Redirect(navigator.nextPage(AddAChildPage, mode, cleanedUa))
                 }
-              case scala.util.Failure(_) =>
+              case Failure(_) =>
                 sessionRepository.set(uaWithChildren).map { _ =>
                   Redirect(navigator.nextPage(AddAChildPage, mode, uaWithChildren))
                 }
             }
 
-          case scala.util.Failure(_) =>
+          case Failure(_) =>
             Future.successful(InternalServerError("Could not save child"))
         }
     }

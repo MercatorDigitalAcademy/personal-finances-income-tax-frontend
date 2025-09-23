@@ -41,15 +41,15 @@ class AddAChildController @Inject()(
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    val existingChildren = request.userAnswers.get(ChildGroup).getOrElse(Nil)
+    val ua = request.userAnswers
+    val list = SummaryListViewModel(
+      rows = Seq(
+        AddAChildSummary.row(ua)
+      ).flatten
+    )
     form.bindFromRequest().fold(
       formWithErrors => {
-        val existingChildren = request.userAnswers.get(ChildGroup).getOrElse(Nil)
-        val ua = request.userAnswers
-        val list = SummaryListViewModel(
-          rows = Seq(
-            AddAChildSummary.row(ua)
-          ).flatten
-        )
         Future.successful(BadRequest(view(formWithErrors, mode, list, existingChildren)))
       },
       addAnother => {

@@ -15,6 +15,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.QualifiesForDlaView
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 class QualifiesForDlaController @Inject()(
                                          override val messagesApi: MessagesApi,
@@ -50,13 +51,12 @@ class QualifiesForDlaController @Inject()(
           request.userAnswers.set(QualifiesForDlaPage, qualifies) match {
             case scala.util.Success(updatedUa) =>
               if (qualifies) {
-                // Not final → persist and go to DLA rate page
                 sessionRepository.set(updatedUa).map { _ =>
                   Redirect(navigator.nextPage(QualifiesForDlaPage, mode, updatedUa))
                 }
               } else {
-                // ✅ Final step for this child
                 finalizeChild(updatedUa, mode, maybeIndex, dlaRateOpt = None)
+                Future.successful(Redirect(routes.AddAChildController.onPageLoad()))
               }
 
             case scala.util.Failure(_) =>
@@ -97,7 +97,7 @@ class QualifiesForDlaController @Inject()(
         }
 
         ua.set(ChildGroup, updatedChildren) match {
-          case scala.util.Success(uaWithChildren) =>
+          case Success(uaWithChildren) =>
             val cleanedTry = uaWithChildren
               .remove(ChildsNamePage)
               .flatMap(_.remove(ChildsBirthDatePage))
@@ -105,17 +105,17 @@ class QualifiesForDlaController @Inject()(
               .flatMap(_.remove(DlaRatePage))
 
             cleanedTry match {
-              case scala.util.Success(cleanedUa: UserAnswers) =>
+              case Success(cleanedUa: UserAnswers) =>
                 sessionRepository.set(cleanedUa).map { _ =>
                   Redirect(navigator.nextPage(AddAChildPage, mode, cleanedUa))
                 }
-              case scala.util.Failure(_) =>
+              case Failure(_) =>
                 sessionRepository.set(uaWithChildren).map { _ =>
                   Redirect(navigator.nextPage(AddAChildPage, mode, uaWithChildren))
                 }
             }
 
-          case scala.util.Failure(_) =>
+          case Failure(_) =>
             Future.successful(InternalServerError("Could not save child"))
         }
     }

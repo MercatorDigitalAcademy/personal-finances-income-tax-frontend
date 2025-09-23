@@ -10,47 +10,41 @@ govukRadios: GovukRadios
 
 @(list: SummaryList, list: SummaryList, children: List[Child])(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+@layout(pageTitle = titleNoForm(messages("addAChild.heading"))) {
 
-<span class="govuk-caption-l">@messages("kdjvhsdjhf")</span>
-<h1 class="govuk-heading-l">@messages("checkYourAnswers.heading")</h1>
-@formHelper(action = routes.AddAChildController.onSubmit(), Symbol("autoComplete") -> "off") {
+    <h1 class="govuk-heading-xl">@messages("addAChild.heading")</h1>
+    @formHelper(action = routes.AddAChildController.onSubmit(), Symbol("autoComplete") -> "off") {
 
-@govukSummaryList(list)
+        @govukSummaryList(list)
 
-@for((child, index) <- children.zipWithIndex) {
-<div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-        @child.name
-    </dt>
-    <dd class="govuk-summary-list__value">
-        @child.dateOfBirth
-    </dd>
-    <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="@routes.ChildsNameController.onPageLoad(mode)">
-            Edit<span class="govuk-visually-hidden"> @child.name</span>
-        </a>
+        @for((child, index) <- children.zipWithIndex) {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    @child.name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @child.dateOfBirth
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="@routes.ChildsNameController.onPageLoad(mode)">
+                        Edit<span class="govuk-visually-hidden"> @child.name</span>
+                    </a>
 
-    </dd>
-</div>
+                </dd>
+            </div>
+    }
 
-@govukRadios(
-RadiosViewModel.yesNo(
-field = form("value"),
-legend = LegendViewModel(messages("qualifiesForDla.heading")).asPageHeading()
-)
-)
+    @govukRadios(
+        RadiosViewModel.yesNo(
+        field = form("value"),
+        legend = LegendViewModel(messages("addAChild.heading"))
+        )
+    )
 
-@govukButton(
-ButtonViewModel(messages("site.continue"))
-)
-}
-}
-
-
-@govukButton(
-ButtonViewModel(messages("site.saveAndContinue")).preventingDoubleClick()
-)
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+    )
+    }
 }
 
 
