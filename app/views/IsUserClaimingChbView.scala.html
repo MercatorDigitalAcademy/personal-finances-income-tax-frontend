@@ -10,7 +10,7 @@
 
 @layout(pageTitle = title(form, messages("isUserClaimingChb.title"))) {
 
-    @formHelper(action = routes.IsUserClaimingChbController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.benefits.routes.IsUserClaimingChbController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

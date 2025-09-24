@@ -19,6 +19,7 @@ package navigation
 import controllers.routes
 import models._
 import pages._
+import pages.benefits.{AddAChildPage, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, IsUserClaimingChbPage, QualifiesForDlaPage, StartPage, WelcomePage}
 import play.api.mvc.Call
 
 import javax.inject.{Inject, Singleton}
@@ -28,32 +29,32 @@ class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
     case WelcomePage           => _ => routes.DevLoginController.showLogin()
-    case StartPage             => _ => routes.IsUserClaimingChbController.onPageLoad(NormalMode)
-    case IsUserClaimingChbPage => _ => routes.AddAChildController.onPageLoad()
+    case StartPage             => _ => controllers.benefits.routes.IsUserClaimingChbController.onPageLoad(NormalMode)
+    case IsUserClaimingChbPage => _ => controllers.benefits.routes.AddAChildController.onPageLoad()
 
     case AddAChildPage =>
       ua =>
         ua.get(AddAChildPage) match {
-          case Some(true)  => routes.ChildsNameController.onPageLoad(NormalMode)
-          case Some(false) => routes.CheckYourAnswersController.onPageLoad()
-          case None        => routes.HomeController.onPageLoad()  //TODO lan redirect to sessionExpirecontroller when made
+          case Some(true)  => controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode)
+          case Some(false) => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
+          case None        => controllers.benefits.routes.HomeController.onPageLoad()  //TODO lan redirect to sessionExpirecontroller when made
         }
 
-    case ChildsNamePage      => _ => routes.ChildsBirthDateController.onPageLoad(NormalMode)
-    case ChildsBirthDatePage => _ => routes.QualifiesForDlaController.onPageLoad()
+    case ChildsNamePage      => _ => controllers.benefits.routes.ChildsBirthDateController.onPageLoad(NormalMode)
+    case ChildsBirthDatePage => _ => controllers.benefits.routes.QualifiesForDlaController.onPageLoad()
     case QualifiesForDlaPage =>
       ua =>
         ua.get(QualifiesForDlaPage) match {
-          case Some(true)  => routes.DlaRateController.onPageLoad()
-          case Some(false) => routes.CheckYourAnswersController.onPageLoad()
-          case None        => routes.HomeController.onPageLoad()
+          case Some(true)  => controllers.benefits.routes.DlaRateController.onPageLoad()
+          case Some(false) => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
+          case None        => controllers.benefits.routes.HomeController.onPageLoad()
         }
-    case DlaRatePage => _ => routes.AddAChildController.onPageLoad()
-    case _                   => _ => routes.HomeController.onPageLoad()
+    case DlaRatePage => _ => controllers.benefits.routes.AddAChildController.onPageLoad()
+    case _                   => _ => controllers.benefits.routes.HomeController.onPageLoad()
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad()
+    case _ => _ => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
   }
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

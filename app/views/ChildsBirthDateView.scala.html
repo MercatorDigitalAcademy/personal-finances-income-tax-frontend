@@ -10,7 +10,7 @@
 
 @layout(pageTitle = title(form, messages("childsBirthDate.title"))) {
 
-    @formHelper(action = routes.ChildsBirthDateController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.benefits.routes.ChildsBirthDateController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))

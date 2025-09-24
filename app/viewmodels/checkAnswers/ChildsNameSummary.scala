@@ -2,7 +2,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.ChildsNamePage
+import pages.benefits.ChildsNamePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -19,7 +19,7 @@ object ChildsNameSummary  {
           key     = "childsName.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ChildsNameController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("childsName.change.hidden"))
           )
         )

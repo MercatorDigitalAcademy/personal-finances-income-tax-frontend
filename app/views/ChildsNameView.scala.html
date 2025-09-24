@@ -12,7 +12,7 @@
 
 @layout(pageTitle = title(form, messages("childsName.title"))) {
 
-    @formHelper(action = routes.ChildsNameController.onSubmit(mode)) {
+    @formHelper(action = controllers.benefits.routes.ChildsNameController.onSubmit(mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

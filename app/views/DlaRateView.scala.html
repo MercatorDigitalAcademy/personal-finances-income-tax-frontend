@@ -11,7 +11,7 @@
 @layout(pageTitle = title(form, messages("dlaRate.title"))) {
 
 
-    @formHelper(action = routes.DlaRateController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.benefits.routes.DlaRateController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

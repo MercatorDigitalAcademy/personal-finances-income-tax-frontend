@@ -2,7 +2,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.IsUserClaimingChbPage
+import pages.benefits.IsUserClaimingChbPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -20,7 +20,7 @@ object IsUserClaimingChbSummary  {
           key     = "isUserClaimingChb.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IsUserClaimingChbController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.IsUserClaimingChbController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("isUserClaimingChb.change.hidden"))
           )
         )

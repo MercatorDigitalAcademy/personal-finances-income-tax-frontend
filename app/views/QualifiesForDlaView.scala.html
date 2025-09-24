@@ -10,7 +10,7 @@
 
 @layout(pageTitle = title(form, messages("qualifiesForDla.title"))) {
 
-    @formHelper(action = routes.QualifiesForDlaController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.benefits.routes.QualifiesForDlaController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

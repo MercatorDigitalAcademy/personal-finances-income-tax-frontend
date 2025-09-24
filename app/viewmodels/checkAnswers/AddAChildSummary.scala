@@ -2,7 +2,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, NormalMode, UserAnswers}
-import pages.AddAChildPage
+import pages.benefits.AddAChildPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -20,7 +20,7 @@ object AddAChildSummary  {
           key     = "addAChild.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.AddAChildController.onPageLoad().url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.AddAChildController.onPageLoad().url)
               .withVisuallyHiddenText(messages("addAChild.change.hidden"))
           )
         )

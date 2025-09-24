@@ -2,7 +2,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.QualifiesForDlaPage
+import pages.benefits.QualifiesForDlaPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -20,7 +20,7 @@ object QualifiesForDlaSummary  {
           key     = "qualifiesForDla.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.QualifiesForDlaController.onPageLoad().url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.QualifiesForDlaController.onPageLoad().url)
               .withVisuallyHiddenText(messages("qualifiesForDla.change.hidden"))
           )
         )
