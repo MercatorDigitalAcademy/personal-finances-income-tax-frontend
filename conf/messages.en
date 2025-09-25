@@ -1,6 +1,7 @@
 site.continue = moving on...
 site.yes = Yes
 site.no = No
+site.change = Change me!!!
 
 index.heading = Welcome To -
 index.title = Personal Finance Frontend

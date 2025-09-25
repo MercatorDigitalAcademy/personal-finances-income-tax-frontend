@@ -17,7 +17,7 @@ object AddAChildSummary  {
         val value = if (answer) "site.yes" else "site.no"
 
         SummaryListRowViewModel(
-          key     = "addAChild.checkYourAnswersLabel",
+          key     = KeyViewModel("addAChild.checkYourAnswersLabel"),
           value   = ValueViewModel(value),
           actions = Seq(
             ActionItemViewModel("site.change", controllers.benefits.routes.AddAChildController.onPageLoad().url)

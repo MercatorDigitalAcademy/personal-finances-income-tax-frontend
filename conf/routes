@@ -46,8 +46,8 @@ POST       /changeAddAChild                              controllers.benefits.Ad
 
 GET        /childsName                                   controllers.benefits.ChildsNameController.onPageLoad(mode: Mode = NormalMode)
 POST       /childsName                                   controllers.benefits.ChildsNameController.onSubmit(mode: Mode = NormalMode)
-GET        /changeChildsName                             controllers.benefits.ChildsNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeChildsName                             controllers.benefits.ChildsNameController.onSubmit(mode: Mode = CheckMode)
+GET        /childsName/:index/change                     controllers.benefits.ChildsNameController.onEditLoad(mode: Mode = CheckMode, index: Int)
+POST       /childsName/:index/change                     controllers.benefits.ChildsNameController.onEditSubmit(mode: Mode = CheckMode, index: Int)
 
 GET        /childsBirthDate                              controllers.benefits.ChildsBirthDateController.onPageLoad(mode: Mode = NormalMode)
 POST       /childsBirthDate                              controllers.benefits.ChildsBirthDateController.onSubmit(mode: Mode = NormalMode)

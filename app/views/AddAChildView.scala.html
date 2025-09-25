@@ -24,7 +24,7 @@ govukRadios: GovukRadios
                     @child.dateOfBirth
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onPageLoad(mode)">
+                    <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onEditLoad(CheckMode, index)">
                         Edit<span class="govuk-visually-hidden"> @child.name</span>
                     </a>
 
