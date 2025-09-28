@@ -3,7 +3,7 @@ package pages.benefits
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 
-case object ChildsNamePage extends QuestionPage[String] {
+case class ChildsNamePage(index: Int) extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ toString
 

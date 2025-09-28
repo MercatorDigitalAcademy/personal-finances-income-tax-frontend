@@ -11,15 +11,15 @@ import viewmodels.implicits._
 
 object ChildsNameSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChildsNamePage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(ChildsNamePage(index)).map {
       answer =>
 
         SummaryListRowViewModel(
           key     = "childsName.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index).url)
               .withVisuallyHiddenText(messages("childsName.change.hidden"))
           )
         )

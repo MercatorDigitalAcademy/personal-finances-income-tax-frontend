@@ -19,7 +19,7 @@ package navigation
 import controllers.routes
 import models._
 import pages._
-import pages.benefits.{AddAChildPage, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, IsUserClaimingChbPage, QualifiesForDlaPage, StartPage, WelcomePage}
+import pages.benefits.{AddAChildPage, ChildGroup, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, IsUserClaimingChbPage, QualifiesForDlaPage, StartPage, WelcomePage}
 import play.api.mvc.Call
 
 import javax.inject.{Inject, Singleton}
@@ -31,25 +31,15 @@ class Navigator @Inject() () {
     case WelcomePage           => _ => routes.DevLoginController.showLogin()
     case StartPage             => _ => controllers.benefits.routes.IsUserClaimingChbController.onPageLoad(NormalMode)
     case IsUserClaimingChbPage => _ => controllers.benefits.routes.AddAChildController.onPageLoad()
-
     case AddAChildPage =>
       ua =>
         ua.get(AddAChildPage) match {
-          case Some(true)  => controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode)
+          case Some(true)  =>
+            val nextIndex = ua.get(ChildGroup).map(_.length).getOrElse(0)
+            controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode, index = nextIndex)
           case Some(false) => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
           case None        => controllers.benefits.routes.HomeController.onPageLoad()  //TODO lan redirect to sessionExpirecontroller when made
         }
-
-    case ChildsNamePage      => _ => controllers.benefits.routes.ChildsBirthDateController.onPageLoad(NormalMode)
-    case ChildsBirthDatePage => _ => controllers.benefits.routes.QualifiesForDlaController.onPageLoad()
-    case QualifiesForDlaPage =>
-      ua =>
-        ua.get(QualifiesForDlaPage) match {
-          case Some(true)  => controllers.benefits.routes.DlaRateController.onPageLoad()
-          case Some(false) => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
-          case None        => controllers.benefits.routes.HomeController.onPageLoad()
-        }
-    case DlaRatePage => _ => controllers.benefits.routes.AddAChildController.onPageLoad()
     case _                   => _ => controllers.benefits.routes.HomeController.onPageLoad()
   }
 
@@ -60,5 +50,40 @@ class Navigator @Inject() () {
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode => normalRoutes(page)(userAnswers)
     case CheckMode  => checkRouteMap(page)(userAnswers)
+  }
+
+  def withIndexNextPage(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call =
+    mode match {
+      case NormalMode =>
+        withIndexNormalRoutes(page, mode, userAnswers, index)
+      case CheckMode =>
+        withIndexCheckRoutes(page, mode, userAnswers, index)
+    }
+
+  private def withIndexNormalRoutes(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call = {
+    page match {
+      case ChildsNamePage(index) => controllers.benefits.routes.ChildsBirthDateController.onPageLoad(NormalMode, index)
+      case ChildsBirthDatePage(index) => controllers.benefits.routes.QualifiesForDlaController.onPageLoad(index)
+      case QualifiesForDlaPage(index)  => qualifiesForDlaNormalRoute(userAnswers: UserAnswers, index: Int)
+      case DlaRatePage(_) => controllers.benefits.routes.AddAChildController.onPageLoad()
+    }
+
+  }
+
+  private def qualifiesForDlaNormalRoute(userAnswers: UserAnswers, index: Int): Call = {
+    userAnswers.get(QualifiesForDlaPage(index)) match {
+      case Some(true) => controllers.benefits.routes.DlaRateController.onPageLoad(index)
+      case Some(false) => controllers.benefits.routes.AddAChildController.onPageLoad()
+      case None => controllers.benefits.routes.HomeController.onPageLoad()
+    }
+  }
+
+  private def withIndexCheckRoutes(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call = {
+    page match {
+      case ChildsNamePage(index) => controllers.benefits.routes.ChildsBirthDateController.onPageLoad(mode, index)
+      case ChildsBirthDatePage(index) => controllers.benefits.routes.QualifiesForDlaController.onPageLoad(index)
+      case QualifiesForDlaPage(index)  => qualifiesForDlaNormalRoute(userAnswers: UserAnswers, index: Int)
+      case DlaRatePage(_) => controllers.benefits.routes.AddAChildController.onPageLoad()
+    }
   }
 }

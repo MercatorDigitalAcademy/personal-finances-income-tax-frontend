@@ -1,7 +1,6 @@
 package controllers.benefits
 
 import controllers.actions._
-import controllers.routes
 import forms.benefits.AddAChildFormProvider
 import models.Mode
 import pages.benefits.ChildGroup
@@ -30,16 +29,17 @@ class AddAChildController @Inject()(
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val existingChildren = request.userAnswers.get(ChildGroup).getOrElse(Nil)
+    val nextIndex = existingChildren.length
     val ua = request.userAnswers
     val list = SummaryListViewModel(
       rows = Seq(
         AddAChildSummary.row(ua)
       ).flatten
     )
-    Ok(view(form, mode, list, existingChildren))
+    Ok(view(form, mode, list, existingChildren, nextIndex))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+  def onSubmit(mode: Mode, index: Int): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     val existingChildren = request.userAnswers.get(ChildGroup).getOrElse(Nil)
     val ua = request.userAnswers
     val list = SummaryListViewModel(
@@ -49,12 +49,12 @@ class AddAChildController @Inject()(
     )
     form.bindFromRequest().fold(
       formWithErrors => {
-        Future.successful(BadRequest(view(formWithErrors, mode, list, existingChildren)))
+        Future.successful(BadRequest(view(formWithErrors, mode, list, existingChildren, index)))
       },
       addAnother => {
         if (addAnother) {
           // go to ChildNamePage (start adding a new child)
-          Future.successful(Redirect(controllers.benefits.routes.ChildsNameController.onPageLoad(mode)))
+          Future.successful(Redirect(controllers.benefits.routes.ChildsNameController.onPageLoad(mode = mode, index = index)))
         } else {
           // straight to Check Your Answers
           Future.successful(Redirect(controllers.benefits.routes.CheckYourAnswersController.onPageLoad()))

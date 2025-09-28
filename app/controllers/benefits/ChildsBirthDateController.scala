@@ -26,36 +26,36 @@ class ChildsBirthDateController @Inject()(
                                         view: ChildsBirthDateView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Int = 0): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
       val form = formProvider()
 
-      val preparedForm = request.userAnswers.get(ChildsBirthDatePage) match {
+      val preparedForm = request.userAnswers.get(ChildsBirthDatePage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      val childsName: String = request.userAnswers.get(ChildsNamePage).getOrElse("this child.")
+      val childsName: String = request.userAnswers.get(ChildsNamePage(index)).getOrElse("this child.")
 
-      Ok(view(preparedForm, mode, childsName))
+      Ok(view(preparedForm, mode, childsName, index))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Int): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       val form = formProvider()
-      val childsName: String = request.userAnswers.get(ChildsNamePage).getOrElse("this child" +
+      val childsName: String = request.userAnswers.get(ChildsNamePage(index)).getOrElse("this child" +
         ".")
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, childsName))),
+          Future.successful(BadRequest(view(formWithErrors, mode, childsName, index))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChildsBirthDatePage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChildsBirthDatePage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ChildsBirthDatePage, mode, updatedAnswers))
+          } yield Redirect(navigator.withIndexNextPage(ChildsBirthDatePage(index), mode, updatedAnswers, index))
       )
   }
 }

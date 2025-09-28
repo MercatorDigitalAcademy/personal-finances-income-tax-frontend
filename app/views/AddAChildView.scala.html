@@ -6,12 +6,12 @@ govukButton: GovukButton,
 govukRadios: GovukRadios
 )
 
-@(form: Form[_], mode: Mode, list: SummaryList, children: List[Child])(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, list: SummaryList, children: List[Child], index: Int)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("addAChild.heading"))) {
 
     <h1 class="govuk-heading-xl">@messages("addAChild.heading")</h1>
-    @formHelper(action = controllers.benefits.routes.AddAChildController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.benefits.routes.AddAChildController.onSubmit(index), Symbol("autoComplete") -> "off") {
 
         @govukSummaryList(list)
 
@@ -24,7 +24,7 @@ govukRadios: GovukRadios
                     @child.dateOfBirth
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onEditLoad(CheckMode, index)">
+                    <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index)">
                         Edit<span class="govuk-visually-hidden"> @child.name</span>
                     </a>
 

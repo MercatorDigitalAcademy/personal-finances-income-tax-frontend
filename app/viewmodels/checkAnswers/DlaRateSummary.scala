@@ -12,8 +12,8 @@ import viewmodels.implicits._
 
 object DlaRateSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DlaRatePage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(DlaRatePage(index)).map {
       answer =>
 
         val value = ValueViewModel(
@@ -26,7 +26,7 @@ object DlaRateSummary  {
           key     = "dlaRate.checkYourAnswersLabel",
           value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.DlaRateController.onPageLoad().url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.DlaRateController.onPageLoad(index).url)
               .withVisuallyHiddenText(messages("dlaRate.change.hidden"))
           )
         )

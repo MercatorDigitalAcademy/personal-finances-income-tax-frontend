@@ -10,8 +10,8 @@ import viewmodels.implicits._
 
 object QualifiesForDlaSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(QualifiesForDlaPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(QualifiesForDlaPage(index)).map {
       answer =>
 
         val value = if (answer) "site.yes" else "site.no"
@@ -20,7 +20,7 @@ object QualifiesForDlaSummary  {
           key     = "qualifiesForDla.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.QualifiesForDlaController.onPageLoad().url)
+            ActionItemViewModel("site.change", controllers.benefits.routes.QualifiesForDlaController.onPageLoad(index).url)
               .withVisuallyHiddenText(messages("qualifiesForDla.change.hidden"))
           )
         )

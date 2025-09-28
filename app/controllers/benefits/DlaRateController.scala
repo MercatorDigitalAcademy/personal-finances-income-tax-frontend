@@ -1,12 +1,10 @@
 package controllers.benefits
 
 import controllers.actions._
-import controllers.routes
 import forms.benefits.DlaRateFormProvider
 import models.requests.DataRequest
 import models.{Child, DlaRate, Mode, UserAnswers}
 import navigation.Navigator
-import pages._
 import pages.benefits.{AddAChildPage, ChildGroup, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, QualifiesForDlaPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -32,26 +30,26 @@ class DlaRateController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, maybeIndex: Option[Int]): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Int): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(DlaRatePage) match {
+      val preparedForm = request.userAnswers.get(DlaRatePage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, index))
   }
 
-  def onSubmit(mode: Mode, maybeIndex: Option[Int]): Action[AnyContent] =
+  def onSubmit(mode: Mode, index: Int): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode, index))),
         dlaRate => {
-          request.userAnswers.set(DlaRatePage, dlaRate) match {
-            case Success(updatedUa) => {
-              finalizeChild(updatedUa, mode, maybeIndex, dlaRateOpt = Some(dlaRate))
+          request.userAnswers.set(DlaRatePage(index), dlaRate) match {
+            case Success(updatedUa: UserAnswers) => {
+              finalizeChild(updatedUa, mode, index, dlaRateOpt = Some(dlaRate))
               Future.successful(Redirect(controllers.benefits.routes.AddAChildController.onPageLoad()))
             }
             case Failure(_) =>
@@ -64,15 +62,15 @@ class DlaRateController @Inject()(
   private def finalizeChild(
                              ua: UserAnswers,
                              mode: Mode,
-                             maybeIndex: Option[Int],
+                             index: Int,
                              dlaRateOpt: Option[DlaRate]
                            )(implicit request: DataRequest[AnyContent]): Future[Result] = {
 
     (for {
-      name      <- ua.get(ChildsNamePage)
-      dob       <- ua.get(ChildsBirthDatePage)
-      qualifies <- ua.get(QualifiesForDlaPage)
-      rate      <- ua.get(DlaRatePage)
+      name      <- ua.get(ChildsNamePage(index))
+      dob       <- ua.get(ChildsBirthDatePage(index))
+      qualifies <- ua.get(QualifiesForDlaPage(index))
+      rate      <- ua.get(DlaRatePage(index))
     } yield (name, dob, qualifies, rate)) match {
 
       case None =>
@@ -87,18 +85,18 @@ class DlaRateController @Inject()(
         )
 
         val existing: List[Child] = ua.get(ChildGroup).getOrElse(Nil)
-        val updatedChildren = maybeIndex match {
-          case Some(i) if i >= 0 && i < existing.length => existing.updated(i, child)
+        val updatedChildren = index match {
+          case i if i >= 0 && i < existing.length => existing.updated(i, child)
           case _                                        => existing :+ child
         }
 
         ua.set(ChildGroup, updatedChildren) match {
           case Success(uaWithChildren) =>
             val cleanedTry: Try[UserAnswers] = uaWithChildren
-              .remove(ChildsNamePage)
-              .flatMap(_.remove(ChildsBirthDatePage))
-              .flatMap(_.remove(QualifiesForDlaPage))
-              .flatMap(_.remove(DlaRatePage))
+              .remove(ChildsNamePage(index))
+              .flatMap(_.remove(ChildsBirthDatePage(index)))
+              .flatMap(_.remove(QualifiesForDlaPage(index)))
+              .flatMap(_.remove(DlaRatePage(index)))
 
             cleanedTry match {
               case Success(cleanedUa: UserAnswers) =>
