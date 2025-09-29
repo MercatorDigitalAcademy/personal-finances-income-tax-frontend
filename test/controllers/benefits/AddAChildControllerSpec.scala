@@ -3,11 +3,11 @@ package controllers.benefits
 import base.SpecBase
 import controllers.routes
 import forms.benefits.AddAChildFormProvider
-import models.NormalMode
+import models.{Child, NormalMode}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.benefits.ChildGroup
 import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -18,6 +18,7 @@ import utils.TestObjectsBenefits
 import viewmodels.govuk.all.SummaryListViewModel
 import views.html.AddAChildView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObjectsBenefits {
@@ -27,7 +28,8 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
   val formProvider = new AddAChildFormProvider()
   val form: Form[Boolean] = formProvider()
 
-  lazy val addAChildRoute: String = controllers.benefits.routes.onPageLoad().url
+  lazy val getAddAChildRoute: String = controllers.benefits.routes.AddAChildController.onPageLoad().url
+  lazy val addAChildRoute: String = controllers.benefits.routes.AddAChildController.onSubmit(1).url
 
   "AddAChild Controller" - {
 
@@ -36,7 +38,7 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, addAChildRoute)
+        val request = FakeRequest(GET, getAddAChildRoute)
         val summaryList = SummaryListViewModel(Seq.empty)
         val list = List.empty
 
@@ -45,7 +47,7 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
         val view = application.injector.instanceOf[AddAChildView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, emptySummaryList,  list)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, emptySummaryList,  list, 0)(request, messages(application)).toString
       }
     }
 
@@ -67,18 +69,21 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
       }
     }*/
 
-    //  TODO lan reinstate test when checkmode is corectlt implemented
+    //  TODO lan reinstate test when checkmode is correctly implemented
+    "must redirect to the childsName with index of 1 when answer is yes and 1 child has been added" in {
 
-    "must redirect to the next page when valid data is submitted" in {
+      val child = Child("Test Name", LocalDate.of(2020, 1, 1), qualifiesForDla = true, None)
+      val uaWithChild = emptyUserAnswers.set(ChildGroup, List(child)).success.value
+
+      val addAnotherRoute:Call = Call("GET", "/childsName?index=1")
 
       val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockSessionRepository.set(uaWithChild)) thenReturn Future.successful(true)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(new FakeNavigator(addAnotherRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -91,7 +96,7 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+        redirectLocation(result).value mustEqual addAnotherRoute.url
       }
     }
 
@@ -120,7 +125,7 @@ class AddAChildControllerSpec extends SpecBase with MockitoSugar with TestObject
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, addAChildRoute)
+        val request = FakeRequest(GET, getAddAChildRoute)
 
         val result = route(application, request).value
 

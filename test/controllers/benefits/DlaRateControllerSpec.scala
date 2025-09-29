@@ -22,7 +22,7 @@ class DlaRateControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/addAChild")
 
-  lazy val dlaRateRoute = controllers.benefits.routes.DlaRateController.onPageLoad().url
+  lazy val dlaRateRoute = controllers.benefits.routes.DlaRateController.onPageLoad(0).url
 
   val formProvider = new DlaRateFormProvider()
   val form = formProvider()
@@ -41,13 +41,13 @@ class DlaRateControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[DlaRateView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, 0)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DlaRatePage, DlaRate.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(DlaRatePage(0), DlaRate.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -59,7 +59,7 @@ class DlaRateControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(DlaRate.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(DlaRate.values.head), NormalMode, 0)(request, messages(application)).toString
       }
     }
 
@@ -105,7 +105,7 @@ class DlaRateControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, 0)(request, messages(application)).toString
       }
     }
 

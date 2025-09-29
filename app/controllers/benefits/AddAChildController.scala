@@ -53,10 +53,8 @@ class AddAChildController @Inject()(
       },
       addAnother => {
         if (addAnother) {
-          // go to ChildNamePage (start adding a new child)
           Future.successful(Redirect(controllers.benefits.routes.ChildsNameController.onPageLoad(mode = mode, index = index)))
         } else {
-          // straight to Check Your Answers
           Future.successful(Redirect(controllers.benefits.routes.CheckYourAnswersController.onPageLoad()))
         }
       }

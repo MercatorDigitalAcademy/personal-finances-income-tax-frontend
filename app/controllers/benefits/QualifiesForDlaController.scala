@@ -51,7 +51,7 @@ class QualifiesForDlaController @Inject()(
             case scala.util.Success(updatedUa) =>
               if (qualifies) {
                 sessionRepository.set(updatedUa).map { _ =>
-                  Redirect(navigator.withIndexNextPage(QualifiesForDlaPage(index), mode, updatedUa, index))
+                  Redirect(navigator.nextPage(QualifiesForDlaPage(index), mode, updatedUa, index))
                 }
               } else {
                 finalizeChild(updatedUa, mode, index, dlaRateOpt = None)

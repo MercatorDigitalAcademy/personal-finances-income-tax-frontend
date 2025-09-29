@@ -29,11 +29,11 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with Test
   private val formProvider = new ChildsBirthDateFormProvider()
   private def form = formProvider()
 
-  def onwardRoute = Call("GET", "/qualifiesForDla")
+  def onwardRoute = Call("GET", "/qualifiesForDla?index=0")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val childsBirthDateRoute = controllers.benefits.routes.ChildsBirthDateController.onPageLoad(NormalMode).url
+  lazy val childsBirthDateRoute = controllers.benefits.routes.ChildsBirthDateController.onPageLoad(NormalMode, 0).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -80,13 +80,13 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with Test
         val view = application.injector.instanceOf[ChildsBirthDateView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, thisChild)(getRequest(), messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, thisChild, 0)(getRequest(), messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ChildsBirthDatePage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ChildsBirthDatePage(0), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -96,7 +96,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with Test
         val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, thisChild)(getRequest(), messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, thisChild, 0)(getRequest(), messages(application)).toString
       }
     }
 
@@ -138,7 +138,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with Test
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, thisChild)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, thisChild, 0)(request, messages(application)).toString
       }
     }
 

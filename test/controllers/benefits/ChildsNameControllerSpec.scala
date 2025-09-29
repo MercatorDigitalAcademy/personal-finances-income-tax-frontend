@@ -20,12 +20,12 @@ import scala.concurrent.Future
 
 class ChildsNameControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/childsBirthDate?index=0")
 
   val formProvider = new ChildsNameFormProvider()
   val form = formProvider()
 
-  lazy val childsNameRoute = controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode).url
+  lazy val childsNameRoute = controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode, 0).url
 
   "ChildsName Controller" - {
 
@@ -41,13 +41,13 @@ class ChildsNameControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[ChildsNameView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, 0)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ChildsNamePage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ChildsNamePage(0), "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -59,7 +59,7 @@ class ChildsNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode, 0)(request, messages(application)).toString
       }
     }
 
@@ -86,6 +86,16 @@ class ChildsNameControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+
+/*        running(application) {
+          val request =
+            FakeRequest(POST, esbaQualifyingAmountRoute)
+              .withFormUrlEncodedBody(("esbaQualifyingAmount", validAnswer.toString))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual onwardRoute.url*/
       }
     }
 
@@ -105,7 +115,7 @@ class ChildsNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, 0)(request, messages(application)).toString
       }
     }
 

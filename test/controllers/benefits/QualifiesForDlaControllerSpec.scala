@@ -21,12 +21,12 @@ import scala.concurrent.Future
 
 class QualifiesForDlaControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute: Call = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/dlaRate?index=0")
 
   val formProvider = new QualifiesForDlaFormProvider()
   val form: Form[Boolean] = formProvider()
 
-  lazy val qualifiesForDlaRoute: String = controllers.benefits.routes.QualifiesForDlaController.onPageLoad().url
+  lazy val qualifiesForDlaRoute: String = controllers.benefits.routes.QualifiesForDlaController.onPageLoad(0).url
 
   "QualifiesForDla Controller" - {
 
@@ -42,13 +42,13 @@ class QualifiesForDlaControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[QualifiesForDlaView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, 0)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(QualifiesForDlaPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(QualifiesForDlaPage(0), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -60,7 +60,7 @@ class QualifiesForDlaControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, 0)(request, messages(application)).toString
       }
     }
 
@@ -106,7 +106,7 @@ class QualifiesForDlaControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, 0)(request, messages(application)).toString
       }
     }
 

@@ -38,7 +38,7 @@ class Navigator @Inject() () {
             val nextIndex = ua.get(ChildGroup).map(_.length).getOrElse(0)
             controllers.benefits.routes.ChildsNameController.onPageLoad(NormalMode, index = nextIndex)
           case Some(false) => controllers.benefits.routes.CheckYourAnswersController.onPageLoad()
-          case None        => controllers.benefits.routes.HomeController.onPageLoad()  //TODO lan redirect to sessionExpirecontroller when made
+          case None        => routes.JourneyRecoveryController.onPageLoad()
         }
     case _                   => _ => controllers.benefits.routes.HomeController.onPageLoad()
   }
@@ -52,13 +52,12 @@ class Navigator @Inject() () {
     case CheckMode  => checkRouteMap(page)(userAnswers)
   }
 
-  def withIndexNextPage(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call =
-    mode match {
-      case NormalMode =>
-        withIndexNormalRoutes(page, mode, userAnswers, index)
-      case CheckMode =>
-        withIndexCheckRoutes(page, mode, userAnswers, index)
-    }
+  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call = mode match {
+    case NormalMode =>
+      withIndexNormalRoutes(page, mode, userAnswers, index)
+    case CheckMode =>
+      withIndexCheckRoutes(page, mode, userAnswers, index)
+  }
 
   private def withIndexNormalRoutes(page: Page, mode: Mode, userAnswers: UserAnswers, index: Int): Call = {
     page match {

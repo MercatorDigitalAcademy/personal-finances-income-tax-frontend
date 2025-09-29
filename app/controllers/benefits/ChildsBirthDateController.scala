@@ -55,7 +55,7 @@ class ChildsBirthDateController @Inject()(
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ChildsBirthDatePage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.withIndexNextPage(ChildsBirthDatePage(index), mode, updatedAnswers, index))
+          } yield Redirect(navigator.nextPage(ChildsBirthDatePage(index), mode, updatedAnswers, index))
       )
   }
 }
