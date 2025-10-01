@@ -1,7 +1,6 @@
 package viewmodels.checkAnswers
 
-import controllers.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.UserAnswers
 import pages.benefits.AddAChildPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow

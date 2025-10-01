@@ -20,7 +20,6 @@ import scala.concurrent.Future
 
 class DlaRateControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/addAChild")
 
   lazy val dlaRateRoute = controllers.benefits.routes.DlaRateController.onPageLoad(0).url
 
@@ -64,6 +63,7 @@ class DlaRateControllerSpec extends SpecBase with MockitoSugar {
     }
 
     "must redirect to the next page when valid data is submitted" in {
+      def onwardRoute = Call("GET", "/check-your-answers/0")
 
       val mockSessionRepository = mock[SessionRepository]
 

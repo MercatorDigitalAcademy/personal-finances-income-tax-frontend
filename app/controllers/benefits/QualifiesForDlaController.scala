@@ -2,12 +2,11 @@ package controllers.benefits
 
 import controllers.actions._
 import forms.benefits.QualifiesForDlaFormProvider
-import models.requests.DataRequest
-import models.{Child, DlaRate, Mode, UserAnswers}
+import models.Mode
 import navigation.Navigator
-import pages.benefits.{AddAChildPage, ChildGroup, ChildsBirthDatePage, ChildsNamePage, DlaRatePage, QualifiesForDlaPage}
+import pages.benefits._
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.QualifiesForDlaView
@@ -16,108 +15,87 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class QualifiesForDlaController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: QualifiesForDlaFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: QualifiesForDlaView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class QualifiesForDlaController @Inject() (
+    override val messagesApi: MessagesApi,
+    sessionRepository: SessionRepository,
+    navigator: Navigator,
+    identify: IdentifierAction,
+    getData: DataRetrievalAction,
+    requireData: DataRequiredAction,
+    formProvider: QualifiesForDlaFormProvider,
+    val controllerComponents: MessagesControllerComponents,
+    view: QualifiesForDlaView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, index: Int): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
-      val preparedForm = request.userAnswers.get(QualifiesForDlaPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
+  def onPageLoad(mode: Mode, index: Int): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
+      val preparedForm =
+        request.userAnswers.get(QualifiesForDlaPage(index)) match {
+          case None        => form
+          case Some(value) => form.fill(value)
+        }
 
       Ok(view(preparedForm, mode, index))
-  }
+    }
 
   def onSubmit(mode: Mode, index: Int): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, index))),
-        qualifies => {
-          request.userAnswers.set(QualifiesForDlaPage(index), qualifies) match {
-            case scala.util.Success(updatedUa) =>
-              if (qualifies) {
-                sessionRepository.set(updatedUa).map { _ =>
-                  Redirect(navigator.nextPage(QualifiesForDlaPage(index), mode, updatedUa, index))
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, index))),
+          qualifies => {
+            request.userAnswers
+              .set(QualifiesForDlaPage(index), qualifies) match {
+              case Success(updatedUa) =>
+                if (qualifies) {
+                  for {
+                    setAnswers <- Future.fromTry(
+                      request.userAnswers
+                        .set(QualifiesForDlaPage(index), qualifies)
+                    )
+                    _ <- sessionRepository.set(setAnswers)
+                  } yield Redirect(
+                    navigator.nextPage(
+                      QualifiesForDlaPage(index),
+                      mode,
+                      updatedUa,
+                      index
+                    )
+                  )
+
+                } else {
+                  for {
+                    setAnswers <- Future.fromTry(
+                      request.userAnswers
+                        .set(QualifiesForDlaPage(index), qualifies)
+                    )
+                    updatedAnswers <- Future
+                      .fromTry(setAnswers.remove(DlaRatePage(index)))
+                    _ <- sessionRepository.set(updatedAnswers)
+                  } yield Redirect(
+                    controllers.benefits.routes.CheckYourAnswersController
+                      .onPageLoad(index)
+                  )
+
+                  sessionRepository.set(updatedUa).map { _ =>
+                    request.userAnswers.remove(DlaRatePage(index))
+                    Redirect(
+                      controllers.benefits.routes.CheckYourAnswersController
+                        .onPageLoad(index)
+                    )
+                  }
                 }
-              } else {
-                finalizeChild(updatedUa, mode, index, dlaRateOpt = None)
-                Future.successful(Redirect(controllers.benefits.routes.AddAChildController.onPageLoad()))
-              }
 
-            case scala.util.Failure(_) =>
-              Future.successful(InternalServerError("Could not save answer"))
-          }
-        }
-      )
-    }
-
-  private def finalizeChild(
-                             ua: UserAnswers,
-                             mode: Mode,
-                             index: Int,
-                             dlaRateOpt: Option[DlaRate]
-                           )(implicit request: DataRequest[AnyContent]): Future[Result] = {
-
-    (for {
-      name      <- ua.get(ChildsNamePage(index))
-      dob       <- ua.get(ChildsBirthDatePage(index))
-      qualifies <- ua.get(QualifiesForDlaPage(index))
-    } yield (name, dob, qualifies)) match {
-
-      case None =>
-        Future.successful(Redirect(controllers.benefits.routes.HomeController.onPageLoad()))
-
-      case Some((name, dob, qualifies)) =>
-        val child = Child(
-          name = name,
-          dateOfBirth = dob,
-          qualifiesForDla = qualifies,
-          dlaRate = dlaRateOpt
-        )
-
-        val existing: List[Child] = ua.get(ChildGroup).getOrElse(Nil)
-        val updatedChildren = index match {
-          case i if i >= 0 && i < existing.length => existing.updated(i, child)
-          case _                                        => existing :+ child
-        }
-
-        ua.set(ChildGroup, updatedChildren) match {
-          case Success(uaWithChildren) =>
-            val cleanedTry = uaWithChildren
-              .remove(ChildsNamePage(index))
-              .flatMap(_.remove(ChildsBirthDatePage(index)))
-              .flatMap(_.remove(QualifiesForDlaPage(index)))
-              .flatMap(_.remove(DlaRatePage(index)))
-
-            cleanedTry match {
-              case Success(cleanedUa: UserAnswers) =>
-                sessionRepository.set(cleanedUa).map { _ =>
-                  Redirect(navigator.nextPage(AddAChildPage, mode, cleanedUa))
-                }
               case Failure(_) =>
-                sessionRepository.set(uaWithChildren).map { _ =>
-                  Redirect(navigator.nextPage(AddAChildPage, mode, uaWithChildren))
-                }
+                Future.successful(InternalServerError("Could not save answer"))
             }
-
-          case Failure(_) =>
-            Future.successful(InternalServerError("Could not save child"))
-        }
+          }
+        )
     }
-  }
-
 }

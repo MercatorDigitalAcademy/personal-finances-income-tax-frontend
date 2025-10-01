@@ -16,7 +16,7 @@ object ChildsNameSummary  {
       answer =>
 
         SummaryListRowViewModel(
-          key     = "childsName.checkYourAnswersLabel",
+          key     = KeyViewModel("childsName.checkYourAnswersLabel"),
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index).url)

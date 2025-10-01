@@ -17,7 +17,8 @@ case object ChildGroup
 
 
 case class ChildWithIndex(index: Int)
-  extends Settable[Array[Child]] {
+  extends Gettable[Child]
+    with Settable[Child] {
 
   override def path: JsPath = JsPath \ toString \ index
 

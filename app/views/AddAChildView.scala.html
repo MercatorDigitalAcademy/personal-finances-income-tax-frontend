@@ -23,6 +23,13 @@ govukRadios: GovukRadios
                 <dd class="govuk-summary-list__value">
                     @child.dateOfBirth
                 </dd>
+                <dd class="govuk-summary-list__value">
+                    @child.qualifiesForDla
+                </dd>
+                <dd class="govuk-summary-list__value">
+                    @child.dlaRate
+                </dd>
+
                 <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index)">
                         Edit<span class="govuk-visually-hidden"> @child.name</span>

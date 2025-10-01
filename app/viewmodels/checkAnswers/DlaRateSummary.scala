@@ -23,8 +23,8 @@ object DlaRateSummary  {
         )
 
         SummaryListRowViewModel(
-          key     = "dlaRate.checkYourAnswersLabel",
-          value   = value,
+          key     = KeyViewModel("dlaRate.checkYourAnswersLabel"),
+          value   = ValueViewModel(value.content),
           actions = Seq(
             ActionItemViewModel("site.change", controllers.benefits.routes.DlaRateController.onPageLoad(index).url)
               .withVisuallyHiddenText(messages("dlaRate.change.hidden"))

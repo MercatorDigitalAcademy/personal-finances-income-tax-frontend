@@ -18,7 +18,7 @@ object ChildsBirthDateSummary  {
         implicit val lang: Lang = messages.lang
 
         SummaryListRowViewModel(
-          key     = "childsBirthDate.checkYourAnswersLabel",
+          key     = KeyViewModel("childsBirthDate.checkYourAnswersLabel"),
           value   = ValueViewModel(answer.format(dateTimeFormat())),
           actions = Seq(
             ActionItemViewModel("site.change", controllers.benefits.routes.ChildsBirthDateController.onPageLoad(CheckMode, index).url)
