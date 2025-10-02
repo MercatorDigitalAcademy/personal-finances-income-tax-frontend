@@ -18,10 +18,10 @@ govukRadios: GovukRadios
 @for((child, index) <- children.zipWithIndex) {
 <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-        @child.name
+        @child.childsName
     </dt>
     <dd class="govuk-summary-list__value">
-        @child.dateOfBirth
+        @child.childsBirthDate
     </dd>
     <dd class="govuk-summary-list__value">
         @child.qualifiesForDla
@@ -32,7 +32,7 @@ govukRadios: GovukRadios
 
     <dd class="govuk-summary-list__actions">
         <a class="govuk-link" href="@controllers.benefits.routes.CheckYourAnswersController.onPageLoad(index)">
-            Edit<span class="govuk-visually-hidden"> @child.name</span>
+            Edit<span class="govuk-visually-hidden"> @child.childsName</span>
         </a>
 
     </dd>

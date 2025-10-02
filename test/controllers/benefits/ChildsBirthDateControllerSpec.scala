@@ -64,7 +64,7 @@ class ChildsBirthDateControllerSpec extends SpecBase with MockitoSugar with Test
         "value.year"  -> validAnswer.getYear.toString
       )
 
-  val childsName: String = childList.head.name
+  val childsName: String = childList.head.childsName
   val thisChild: String = "this child."
 
   "ChildsBirthDate Controller" - {

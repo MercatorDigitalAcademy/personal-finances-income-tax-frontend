@@ -41,7 +41,7 @@ class ChildsNameController @Inject() (
               case Some(name) => form.fill(name)
               case None => form
             }
-            case Some(value) => form.fill(value.name)
+            case Some(value) => form.fill(value.childsName)
 
           }
         case NormalMode =>

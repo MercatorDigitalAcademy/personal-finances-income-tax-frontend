@@ -47,7 +47,7 @@ class ChildsBirthDateController @Inject() (
               case Some(dob) => form.fill(dob)
               case None => form
             }
-            case Some(child) => form.fill(child.dateOfBirth)
+            case Some(child) => form.fill(child.childsBirthDate)
           }
         case NormalMode =>
           dobFromForm match {

@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 case class ChildsBirthDatePage(index: Int) extends QuestionPage[LocalDate] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ ChildGroup.toString \ index \toString
 
   override def toString: String = "childsBirthDate"
 }

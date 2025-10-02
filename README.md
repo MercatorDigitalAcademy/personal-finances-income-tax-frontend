@@ -32,3 +32,29 @@ you may need to give it permissions:
 ```
 
 give the Page a Classname
+
+```json
+{
+  "_id": "lananh.nguyen",
+  "data": {
+    "isUserClaimingChb": true,
+    "children": [
+      {
+        "qualifiesForDla": true,
+        "childsName": "harry potter",
+        "childsBirthDate": "2023-02-02",
+        "dlaRate": "lower"
+      },
+      {
+        "childsName": "suzy q",
+        "childsBirthDate": "2012-12-12",
+        "qualifiesForDla": true,
+        "dlaRate": "higher"
+      }
+    ]
+  },
+  "lastUpdated": {
+    "$date": "2025-10-02T14:08:24.429Z"
+  }
+}
+```
