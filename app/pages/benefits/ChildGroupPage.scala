@@ -1,13 +1,11 @@
-
 package pages.benefits
 
 import models.Child
 import play.api.libs.json.JsPath
 import queries.{Gettable, Settable}
 
-
 case object ChildGroup
-  extends Gettable[List[Child]]
+    extends Gettable[List[Child]]
     with Settable[List[Child]] {
   override def path: JsPath = JsPath \ toString
 
@@ -15,13 +13,11 @@ case object ChildGroup
 
 }
 
-
 case class ChildWithIndex(index: Int)
-  extends Gettable[Child]
+    extends Gettable[Child]
     with Settable[Child] {
 
   override def path: JsPath = JsPath \ toString \ index
 
   override def toString: String = "children"
 }
-

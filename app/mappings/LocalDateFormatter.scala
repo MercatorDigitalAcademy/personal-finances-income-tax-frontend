@@ -24,26 +24,34 @@ import java.time.{LocalDate, Month}
 import scala.util.{Failure, Success, Try}
 
 private[mappings] class LocalDateFormatter(
-  invalidKey: String,
-  allRequiredKey: String,
-  twoRequiredKey: String,
-  requiredKey: String,
-  args: Seq[String] = Seq.empty
+    invalidKey: String,
+    allRequiredKey: String,
+    twoRequiredKey: String,
+    requiredKey: String,
+    args: Seq[String] = Seq.empty
 )(implicit messages: Messages)
     extends Formatter[LocalDate]
     with Formatters {
 
   private val fieldKeys: List[String] = List("day", "month", "year")
 
-  private def toDate(key: String, day: Int, month: Int, year: Int): Either[Seq[FormError], LocalDate] =
+  private def toDate(
+      key: String,
+      day: Int,
+      month: Int,
+      year: Int
+  ): Either[Seq[FormError], LocalDate] =
     Try(LocalDate.of(year, month, day)) match {
       case Success(date) =>
         Right(date)
-      case Failure(_)    =>
+      case Failure(_) =>
         Left(Seq(FormError(key, invalidKey, args)))
     }
 
-  private def formatDate(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
+  private def formatDate(
+      key: String,
+      data: Map[String, String]
+  ): Either[Seq[FormError], LocalDate] = {
 
     val int = intFormatter(
       requiredKey = invalidKey,
@@ -55,14 +63,17 @@ private[mappings] class LocalDateFormatter(
     val month = new MonthFormatter(invalidKey, args)
 
     for {
-      day   <- int.bind(s"$key.day", data)
+      day <- int.bind(s"$key.day", data)
       month <- month.bind(s"$key.month", data)
-      year  <- int.bind(s"$key.year", data)
-      date  <- toDate(key, day, month, year)
+      year <- int.bind(s"$key.year", data)
+      date <- toDate(key, day, month, year)
     } yield date
   }
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
+  override def bind(
+      key: String,
+      data: Map[String, String]
+  ): Either[Seq[FormError], LocalDate] = {
 
     val fields = fieldKeys.map { field =>
       field -> data.get(s"$key.$field").filter(_.nonEmpty)
@@ -90,17 +101,22 @@ private[mappings] class LocalDateFormatter(
 
   override def unbind(key: String, value: LocalDate): Map[String, String] =
     Map(
-      s"$key.day"   -> value.getDayOfMonth.toString,
+      s"$key.day" -> value.getDayOfMonth.toString,
       s"$key.month" -> value.getMonthValue.toString,
-      s"$key.year"  -> value.getYear.toString
+      s"$key.year" -> value.getYear.toString
     )
 }
 
-private class MonthFormatter(invalidKey: String, args: Seq[String] = Seq.empty) extends Formatter[Int] with Formatters {
+private class MonthFormatter(invalidKey: String, args: Seq[String] = Seq.empty)
+    extends Formatter[Int]
+    with Formatters {
 
   private val baseFormatter = stringFormatter(invalidKey, args)
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Int] = {
+  override def bind(
+      key: String,
+      data: Map[String, String]
+  ): Either[Seq[FormError], Int] = {
 
     val months = Month.values.toList
 
@@ -109,7 +125,10 @@ private class MonthFormatter(invalidKey: String, args: Seq[String] = Seq.empty) 
       .flatMap { str =>
         months
           .find(m =>
-            m.getValue.toString == str.replaceAll("^0+", "") || m.toString == str.toUpperCase || m.toString
+            m.getValue.toString == str.replaceAll(
+              "^0+",
+              ""
+            ) || m.toString == str.toUpperCase || m.toString
               .take(3) == str.toUpperCase
           )
           .map(x => Right(x.getValue))

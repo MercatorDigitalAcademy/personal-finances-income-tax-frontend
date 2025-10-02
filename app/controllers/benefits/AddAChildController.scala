@@ -3,7 +3,6 @@ package controllers.benefits
 import controllers.actions._
 import forms.benefits.AddAChildFormProvider
 import models.{CannotSaveChildError, Mode, UserAnswers}
-import navigation.Navigator
 import pages.benefits.{
   ChildGroup,
   ChildsBirthDatePage,
@@ -28,7 +27,6 @@ class AddAChildController @Inject() (
     requireData: DataRequiredAction,
     sessionRepository: SessionRepository,
     formProvider: AddAChildFormProvider,
-    navigator: Navigator,
     val controllerComponents: MessagesControllerComponents,
     view: AddAChildView
 )(implicit ec: ExecutionContext)

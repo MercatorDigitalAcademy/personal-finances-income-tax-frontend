@@ -1,7 +1,4 @@
 package pages.benefits
 import pages.Page
 
-case object ContinuePage extends Page {
-
-}
-
+case object ContinuePage extends Page {}

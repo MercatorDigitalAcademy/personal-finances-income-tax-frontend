@@ -10,46 +10,46 @@ govukRadios: GovukRadios
 
 @layout(pageTitle = titleNoForm(messages("addAChild.heading"))) {
 
-    <h1 class="govuk-heading-xl">@messages("addAChild.heading")</h1>
-    @formHelper(action = controllers.benefits.routes.AddAChildController.onSubmit(index), Symbol("autoComplete") -> "off") {
+<h1 class="govuk-heading-xl">@messages("addAChild.heading")</h1>
+@formHelper(action = controllers.benefits.routes.AddAChildController.onSubmit(index), Symbol("autoComplete") -> "off") {
 
-        @govukSummaryList(list)
+@govukSummaryList(list)
 
-        @for((child, index) <- children.zipWithIndex) {
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    @child.name
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @child.dateOfBirth
-                </dd>
-                <dd class="govuk-summary-list__value">
-                    @child.qualifiesForDla
-                </dd>
-                <dd class="govuk-summary-list__value">
-                    @child.dlaRate
-                </dd>
+@for((child, index) <- children.zipWithIndex) {
+<div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+        @child.name
+    </dt>
+    <dd class="govuk-summary-list__value">
+        @child.dateOfBirth
+    </dd>
+    <dd class="govuk-summary-list__value">
+        @child.qualifiesForDla
+    </dd>
+    <dd class="govuk-summary-list__value">
+        @child.dlaRate
+    </dd>
 
-                <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="@controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index)">
-                        Edit<span class="govuk-visually-hidden"> @child.name</span>
-                    </a>
+    <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="@controllers.benefits.routes.CheckYourAnswersController.onPageLoad(index)">
+            Edit<span class="govuk-visually-hidden"> @child.name</span>
+        </a>
 
-                </dd>
-            </div>
-    }
+    </dd>
+</div>
+}
 
-    @govukRadios(
-        RadiosViewModel.yesNo(
-        field = form("value"),
-        legend = LegendViewModel(messages("addAChild.heading"))
-        )
-    )
+@govukRadios(
+RadiosViewModel.yesNo(
+field = form("value"),
+legend = LegendViewModel(messages("addAChild.heading"))
+)
+)
 
-    @govukButton(
-        ButtonViewModel(messages("site.continue"))
-    )
-    }
+@govukButton(
+ButtonViewModel(messages("site.continue"))
+)
+}
 }
 
 

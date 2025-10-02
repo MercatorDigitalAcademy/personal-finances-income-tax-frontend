@@ -13,17 +13,19 @@ object DlaRate extends Enumerable.Implicits {
   case object Lower extends WithName("lower") with DlaRate
 
   val values: Seq[DlaRate] = Seq(
-    Higher, Middle, Lower
+    Higher,
+    Middle,
+    Lower
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
+  def options(implicit messages: Messages): Seq[RadioItem] =
+    values.zipWithIndex.map { case (value, index) =>
       RadioItem(
         content = Text(messages(s"dlaRate.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
-  }
+    }
 
   implicit val enumerable: Enumerable[DlaRate] =
     Enumerable(values.map(v => v.toString -> v): _*)

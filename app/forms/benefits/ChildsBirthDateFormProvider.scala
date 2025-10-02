@@ -12,10 +12,10 @@ class ChildsBirthDateFormProvider @Inject() extends Mappings {
   def apply()(implicit messages: Messages): Form[LocalDate] =
     Form(
       "value" -> localDate(
-        invalidKey     = "childsBirthDate.error.invalid",
+        invalidKey = "childsBirthDate.error.invalid",
         allRequiredKey = "childsBirthDate.error.required.all",
         twoRequiredKey = "childsBirthDate.error.required.two",
-        requiredKey    = "childsBirthDate.error.required"
+        requiredKey = "childsBirthDate.error.required"
       )
     )
 }

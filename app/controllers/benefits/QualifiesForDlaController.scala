@@ -2,7 +2,7 @@ package controllers.benefits
 
 import controllers.actions._
 import forms.benefits.QualifiesForDlaFormProvider
-import models.Mode
+import models.{CheckMode, Mode, NormalMode}
 import navigation.Navigator
 import pages.benefits._
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -33,11 +33,23 @@ class QualifiesForDlaController @Inject() (
 
   def onPageLoad(mode: Mode, index: Int): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm =
-        request.userAnswers.get(QualifiesForDlaPage(index)) match {
-          case None        => form
-          case Some(value) => form.fill(value)
-        }
+      val preparedForm = mode match {
+        case CheckMode =>
+          request.userAnswers.get(ChildWithIndex(index)) match {
+            case Some(child) => form.fill(child.qualifiesForDla)
+            case None =>
+              request.userAnswers.get(QualifiesForDlaPage(index)) match {
+                case Some(dob) => form.fill(dob)
+                case None      => form
+              }
+
+          }
+        case NormalMode =>
+          request.userAnswers.get(QualifiesForDlaPage(index)) match {
+            case None        => form
+            case Some(value) => form.fill(value)
+          }
+      }
 
       Ok(view(preparedForm, mode, index))
     }

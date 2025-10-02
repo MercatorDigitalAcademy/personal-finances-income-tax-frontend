@@ -9,21 +9,26 @@ import utils.DateTimeFormats.dateTimeFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChildsBirthDateSummary  {
+object ChildsBirthDateSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChildsBirthDatePage(index)).map {
-      answer =>
+  def row(answers: UserAnswers, index: Int)(implicit
+      messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(ChildsBirthDatePage(index)).map { answer =>
+      implicit val lang: Lang = messages.lang
 
-        implicit val lang: Lang = messages.lang
-
-        SummaryListRowViewModel(
-          key     = KeyViewModel("childsBirthDate.checkYourAnswersLabel"),
-          value   = ValueViewModel(answer.format(dateTimeFormat())),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.ChildsBirthDateController.onPageLoad(CheckMode, index).url)
-              .withVisuallyHiddenText(messages("childsBirthDate.change.hidden"))
+      SummaryListRowViewModel(
+        key = KeyViewModel("childsBirthDate.checkYourAnswersLabel"),
+        value = ValueViewModel(answer.format(dateTimeFormat())),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.benefits.routes.ChildsBirthDateController
+              .onPageLoad(CheckMode, index)
+              .url
           )
+            .withVisuallyHiddenText(messages("childsBirthDate.change.hidden"))
         )
+      )
     }
 }

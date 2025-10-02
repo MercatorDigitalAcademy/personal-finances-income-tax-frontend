@@ -98,21 +98,21 @@ class CheckYourAnswersController @Inject() (
         )
 
         val existing: List[Child] = ua.get(ChildGroup).getOrElse(Nil)
+
         val updatedChildren = index match {
           case i if i >= 0 && i < existing.length => existing.updated(i, child)
           case _                                  => existing :+ child
         }
+
         ua.set(ChildGroup, updatedChildren) match {
           case Success(uaWithChildren) =>
-            for {
-              updatedAnswers <- Future.fromTry(
-                request.userAnswers.set(ChildGroup, updatedChildren)
-              )
-              _ <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              controllers.benefits.routes.AddAChildController.onPageLoad()
-            )
-
+            sessionRepository
+              .set(uaWithChildren)
+              .map(_ => {
+                Redirect(
+                  controllers.benefits.routes.AddAChildController.onPageLoad()
+                )
+              })
           case Failure(_) =>
             Future.successful(InternalServerError("Could not save child"))
         }

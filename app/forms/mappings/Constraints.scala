@@ -31,7 +31,9 @@ trait Constraints {
         .getOrElse(Valid)
     }
 
-  protected def minimumValue[A](minimum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
+  protected def minimumValue[A](minimum: A, errorKey: String)(implicit
+      ev: Ordering[A]
+  ): Constraint[A] =
     Constraint { input =>
       import ev._
 
@@ -42,7 +44,9 @@ trait Constraints {
       }
     }
 
-  protected def maximumValue[A](maximum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
+  protected def maximumValue[A](maximum: A, errorKey: String)(implicit
+      ev: Ordering[A]
+  ): Constraint[A] =
     Constraint { input =>
       import ev._
 
@@ -53,7 +57,9 @@ trait Constraints {
       }
     }
 
-  protected def inRange[A](minimum: A, maximum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
+  protected def inRange[A](minimum: A, maximum: A, errorKey: String)(implicit
+      ev: Ordering[A]
+  ): Constraint[A] =
     Constraint { input =>
       import ev._
 
@@ -68,7 +74,7 @@ trait Constraints {
     Constraint {
       case str if str.matches(regex) =>
         Valid
-      case _                         =>
+      case _ =>
         Invalid(errorKey, regex)
     }
 
@@ -76,23 +82,31 @@ trait Constraints {
     Constraint {
       case str if str.length <= maximum =>
         Valid
-      case _                            =>
+      case _ =>
         Invalid(errorKey, maximum)
     }
 
-  protected def maxDate(maximum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
+  protected def maxDate(
+      maximum: LocalDate,
+      errorKey: String,
+      args: Any*
+  ): Constraint[LocalDate] =
     Constraint {
       case date if date.isAfter(maximum) =>
         Invalid(errorKey, args: _*)
-      case _                             =>
+      case _ =>
         Valid
     }
 
-  protected def minDate(minimum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
+  protected def minDate(
+      minimum: LocalDate,
+      errorKey: String,
+      args: Any*
+  ): Constraint[LocalDate] =
     Constraint {
       case date if date.isBefore(minimum) =>
         Invalid(errorKey, args: _*)
-      case _                              =>
+      case _ =>
         Valid
     }
 
@@ -100,12 +114,12 @@ trait Constraints {
     Constraint {
       case set if set.nonEmpty =>
         Valid
-      case _                   =>
+      case _ =>
         Invalid(errorKey)
     }
 
   protected def minimumCurrency(minimum: BigDecimal, errorKey: String)(implicit
-                                                                       ev: Ordering[BigDecimal]
+      ev: Ordering[BigDecimal]
   ): Constraint[BigDecimal] =
     Constraint { input =>
       if (input >= minimum) {
@@ -116,7 +130,7 @@ trait Constraints {
     }
 
   protected def maximumCurrency(maximum: BigDecimal, errorKey: String)(implicit
-                                                                       ev: Ordering[BigDecimal]
+      ev: Ordering[BigDecimal]
   ): Constraint[BigDecimal] =
     Constraint { input =>
       if (input <= maximum) {

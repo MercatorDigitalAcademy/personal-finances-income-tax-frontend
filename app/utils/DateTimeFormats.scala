@@ -31,5 +31,3 @@ object DateTimeFormats {
   val dateTimeHintFormat: DateTimeFormatter =
     DateTimeFormatter.ofPattern("d M yyyy")
 }
-
-

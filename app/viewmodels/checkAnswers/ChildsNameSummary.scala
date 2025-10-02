@@ -9,19 +9,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChildsNameSummary  {
+object ChildsNameSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChildsNamePage(index)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = KeyViewModel("childsName.checkYourAnswersLabel"),
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.ChildsNameController.onPageLoad(CheckMode, index).url)
-              .withVisuallyHiddenText(messages("childsName.change.hidden"))
+  def row(answers: UserAnswers, index: Int)(implicit
+      messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(ChildsNamePage(index)).map { answer =>
+      SummaryListRowViewModel(
+        key = KeyViewModel("childsName.checkYourAnswersLabel"),
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.benefits.routes.ChildsNameController
+              .onPageLoad(CheckMode, index)
+              .url
           )
+            .withVisuallyHiddenText(messages("childsName.change.hidden"))
         )
+      )
     }
 }

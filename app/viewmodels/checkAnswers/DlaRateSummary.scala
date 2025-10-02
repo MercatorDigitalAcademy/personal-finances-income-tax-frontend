@@ -10,25 +10,28 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object DlaRateSummary  {
+object DlaRateSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DlaRatePage(index)).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"dlaRate.$answer"))
-          )
+  def row(answers: UserAnswers, index: Int)(implicit
+      messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(DlaRatePage(index)).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"dlaRate.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = KeyViewModel("dlaRate.checkYourAnswersLabel"),
-          value   = ValueViewModel(value.content),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.benefits.routes.DlaRateController.onPageLoad(index).url)
-              .withVisuallyHiddenText(messages("dlaRate.change.hidden"))
+      SummaryListRowViewModel(
+        key = KeyViewModel("dlaRate.checkYourAnswersLabel"),
+        value = ValueViewModel(value.content),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.benefits.routes.DlaRateController.onPageLoad(index).url
           )
+            .withVisuallyHiddenText(messages("dlaRate.change.hidden"))
         )
+      )
     }
 }

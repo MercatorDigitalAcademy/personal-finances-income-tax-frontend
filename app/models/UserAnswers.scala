@@ -24,20 +24,22 @@ import java.time.Instant
 import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(
-  id: String,
-  data: JsObject = Json.obj(),
-  lastUpdated: Instant = Instant.now
+    id: String,
+    data: JsObject = Json.obj(),
+    lastUpdated: Instant = Instant.now
 ) {
 
   def get[A](page: Gettable[A])(implicit rds: Reads[A]): Option[A] =
     Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)
 
-  def set[A](page: Settable[A], value: A)(implicit writes: Writes[A]): Try[UserAnswers] = {
+  def set[A](page: Settable[A], value: A)(implicit
+      writes: Writes[A]
+  ): Try[UserAnswers] = {
 
     val updatedData = data.setObject(page.path, Json.toJson(value)) match {
       case JsSuccess(jsValue, _) =>
         Success(jsValue)
-      case JsError(errors)       =>
+      case JsError(errors) =>
         Failure(JsResultException(errors))
     }
 
@@ -52,7 +54,7 @@ final case class UserAnswers(
     val updatedData = data.removeObject(page.path) match {
       case JsSuccess(jsValue, _) =>
         Success(jsValue)
-      case JsError(_)            =>
+      case JsError(_) =>
         Success(data)
     }
 

@@ -48,9 +48,13 @@ class DlaRateController @Inject() (
           formWithErrors =>
             Future.successful(BadRequest(view(formWithErrors, mode, index))),
           dlaRate => {
-              for {
-                updatedAnswers <- Future.fromTry(request.userAnswers.set(DlaRatePage(index), dlaRate))
-            } yield Redirect(navigator.nextPage(DlaRatePage(index), mode, updatedAnswers, index))
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(DlaRatePage(index), dlaRate))
+              _ <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(
+              navigator
+                .nextPage(DlaRatePage(index), mode, updatedAnswers, index)
+            )
           }
         )
     }
