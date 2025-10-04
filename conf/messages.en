@@ -66,3 +66,9 @@ qualifiesForDla.checkYourAnswersLabel = qualifiesForDla
 qualifiesForDla.error.required = Select yes if qualifiesForDla
 qualifiesForDla.change.hidden = QualifiesForDla
 
+
+deleteChild.title = deleteChild
+deleteChild.heading = deleteChild
+deleteChild.checkYourAnswersLabel = deleteChild
+deleteChild.error.required = Select yes if deleteChild
+deleteChild.change.hidden = DeleteChild

@@ -28,7 +28,8 @@ import pages.benefits.{
   IsUserClaimingChbPage,
   QualifiesForDlaPage,
   StartPage,
-  WelcomePage
+  WelcomePage,
+  DeleteChildPage
 }
 import play.api.mvc.Call
 
@@ -129,6 +130,7 @@ class Navigator @Inject() () {
         qualifiesForDlaNormalRoute(userAnswers: UserAnswers, index: Int)
       case DlaRatePage(index) =>
         controllers.benefits.routes.CheckYourAnswersController.onPageLoad(index)
+      case DeleteChildPage(index) => controllers.benefits.routes.AddAChildController.onPageLoad()
     }
   }
 }

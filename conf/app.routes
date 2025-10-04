@@ -64,3 +64,7 @@ GET        /qualifiesForDla                              controllers.benefits.Qu
 POST       /qualifiesForDla                              controllers.benefits.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, index: Int)
 GET        /qualifiesForDla/:index/change                         controllers.benefits.QualifiesForDlaController.onPageLoad(mode: Mode = NormalMode, index: Int)
 POST       /qualifiesForDla/:index/change                         controllers.benefits.QualifiesForDlaController.onSubmit(mode: Mode = NormalMode, index: Int)
+
+GET        /deleteChild/:index                        controllers.benefits.DeleteChildController.onPageLoad(mode: Mode = CheckMode, index: Int)
+POST       /deleteChild/:index                        controllers.benefits.DeleteChildController.onSubmit(mode: Mode = CheckMode, index: Int)
+

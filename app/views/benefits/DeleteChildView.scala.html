@@ -1,0 +1,49 @@
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukRadios: GovukRadios,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], mode: Mode, index: Int, child: Child)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = title(form, messages("deleteChild.title"))) {
+
+
+<div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+        @child.childsName
+    </dt>
+    <dd class="govuk-summary-list__value">
+        @child.childsBirthDate
+    </dd>
+    <dd class="govuk-summary-list__value">
+        @child.qualifiesForDla
+    </dd>
+    <dd class="govuk-summary-list__value">
+        @child.dlaRate
+    </dd>
+</div>
+
+
+    @formHelper(action = controllers.benefits.routes.DeleteChildController.onSubmit(index), Symbol("autoComplete") -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
+
+        @govukRadios(
+            RadiosViewModel.yesNo(
+                field = form("value"),
+                legend = LegendViewModel(messages("deleteChild.heading")).asPageHeading()
+            )
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
+
+    }
+
+}

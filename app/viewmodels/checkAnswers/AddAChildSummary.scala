@@ -8,6 +8,7 @@ import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
 object AddAChildSummary {
+  // TODO lan fix or remove
 
   def row(
       answers: UserAnswers
@@ -23,8 +24,15 @@ object AddAChildSummary {
             "site.change",
             controllers.benefits.routes.AddAChildController.onPageLoad().url
           )
-            .withVisuallyHiddenText(messages("addAChild.change.hidden"))
+            .withVisuallyHiddenText(messages("addAChild.change.hidden")),
+          ActionItemViewModel(
+            "site.remove",
+            controllers.benefits.routes.HomeController.onPageLoad().url
+          )
+            .withVisuallyHiddenText(messages("esbaClaimAmount.change.hidden"))
+        ),
+        actionsCss = "w-25"
         )
-      )
+
     }
 }
