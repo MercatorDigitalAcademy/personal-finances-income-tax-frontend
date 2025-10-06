@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2024 HM Revenue & Customs
  *
@@ -18,7 +17,7 @@
 package connectors
 
 import config.FrontendAppConfig
-import models.{ApiError, Child}
+import models.{ApiError, Child, FetchedBenefits}
 import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.{JsString, Json}
@@ -29,31 +28,21 @@ import java.util.UUID
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-case class UpdateStatusResponse(httpResponse: HttpResponse, result: Either[ApiError, String])
+case class UpdateStatusResponse(
+    httpResponse: HttpResponse,
+    result: Either[ApiError, String]
+)
 
-object UpdateStatusResponse {
-  implicit val updateJourneyStatusResponseReads: HttpReads[UpdateStatusResponse] =
-    new HttpReads[UpdateStatusResponse] with Parser {
-
-      override protected[connectors] val parserName: String = this.getClass.getSimpleName
-
-      override def read(method: String, url: String, response: HttpResponse): UpdateStatusResponse =
-        response.status match {
-          case NO_CONTENT => UpdateStatusResponse(response, Right(""))
-          case NOT_FOUND | INTERNAL_SERVER_ERROR | SERVICE_UNAVAILABLE | BAD_REQUEST =>
-            UpdateStatusResponse(response, handleError[String](response, response.status))
-          case _ => UpdateStatusResponse(response, handleError[String](response, INTERNAL_SERVER_ERROR))
-        }
-    }
-}
-
-class BenefitsConnector @Inject() (httpClient: HttpClientV2, appConfig: FrontendAppConfig)(implicit
-                                                                                                 ec: ExecutionContext
+class BenefitsConnector @Inject() (
+    httpClient: HttpClientV2,
+    appConfig: FrontendAppConfig
+)(implicit
+    ec: ExecutionContext
 ) extends Logging {
 
-  def getBenefitsSubmission(userId: UUID, children: List[Child])(implicit
-                              hc: HeaderCarrier
-  ): Future[Either[ApiError, String]] = {
+  def benefitsSubmission(userId: UUID, children: List[Child])(implicit
+      hc: HeaderCarrier
+  ): Future[Either[ApiError, FetchedBenefits]] = {
     val getBenefitsUrl =
       s"${appConfig.benefitsServiceBaseUrl}"
 
@@ -61,11 +50,12 @@ class BenefitsConnector @Inject() (httpClient: HttpClientV2, appConfig: Frontend
       .put(url"$getBenefitsUrl")
       .setHeader("userId" -> userId.toString)
       .withBody(Json.obj("children" -> JsString(children.toString())))
-      .execute[UpdateStatusResponse]
-      .map { response: UpdateStatusResponse =>
+      .execute[BenefitsResponse]
+      .map { response: BenefitsResponse =>
+        println("Response received from Benefits API" + BenefitsResponse)
         if (response.result.isLeft) {
           logger.error(
-            s"Error updating entitlements" +
+            s"Error getting entitlements" +
               s" status: ${response.httpResponse.status}; Body:${response.httpResponse.body}"
           )
         }
