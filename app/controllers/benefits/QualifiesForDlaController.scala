@@ -36,7 +36,7 @@ class QualifiesForDlaController @Inject() (
       val preparedForm = mode match {
         case CheckMode =>
           request.userAnswers.get(ChildWithIndex(index)) match {
-            case Some(child) => form.fill(child.qualifiesForDla)
+            case Some(child) => form.fill(child.qualifiesForDLA)
             case None =>
               request.userAnswers.get(QualifiesForDlaPage(index)) match {
                 case Some(dob) => form.fill(dob)

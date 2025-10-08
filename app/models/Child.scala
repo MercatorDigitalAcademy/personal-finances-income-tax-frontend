@@ -5,10 +5,10 @@ import play.api.libs.json.{Format, Json}
 import java.time.LocalDate
 
 case class Child(
-    childsName: String,
-    childsBirthDate: LocalDate,
-    qualifiesForDla: Boolean,
-    dlaRate: Option[DlaRate]
+    name: String,
+    dateOfBirth: LocalDate,
+    qualifiesForDLA: Boolean,
+    dlaRate: Option[String]
 )
 
 case object Child {

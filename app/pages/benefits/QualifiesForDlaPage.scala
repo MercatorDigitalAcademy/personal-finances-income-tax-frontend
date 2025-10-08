@@ -7,5 +7,5 @@ case class QualifiesForDlaPage(index: Int) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ ChildGroup.toString \ index \toString
 
-  override def toString: String = "qualifiesForDla"
+  override def toString: String = "qualifiesForDLA"
 }
