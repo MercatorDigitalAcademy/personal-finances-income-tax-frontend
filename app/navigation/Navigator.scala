@@ -40,6 +40,7 @@ class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
     case WelcomePage => _ => routes.DevLoginController.showLogin()
+    case DevLoginPage => _ => controllers.benefits.routes.StartController.onPageLoad()
     case StartPage =>
       _ =>
         controllers.benefits.routes.IsUserClaimingChbController

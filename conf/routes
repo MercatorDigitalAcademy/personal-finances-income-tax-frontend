@@ -8,13 +8,11 @@
 ->          /hmrc-frontend                               hmrcfrontend.Routes
 
 GET        /                                            controllers.benefits.HomeController.onPageLoad()
-GET        /continue                                    controllers.benefits.IndexController.onPageLoad()
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /index                                       controllers.benefits.IndexController.onPageLoad()
-
+GET        /index                                        controllers.benefits.IndexController.onPageLoad(userId: String)
 GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
 GET        /refresh-session                             controllers.KeepAliveController.keepAlive()
@@ -68,3 +66,6 @@ POST       /qualifiesForDla/:index/change                controllers.benefits.Qu
 
 GET        /deleteChild/:index                        controllers.benefits.DeleteChildController.onPageLoad(mode: Mode = CheckMode, index: Int)
 POST       /deleteChild/:index                        controllers.benefits.DeleteChildController.onSubmit(mode: Mode = CheckMode, index: Int)
+
+GET        /submitChildren                        controllers.benefits.SubmitChildrenController.onPageLoad(mode: Mode = NormalMode)
+POST       /submitChildren                        controllers.benefits.SubmitChildrenController.onSubmit(mode: Mode = NormalMode)

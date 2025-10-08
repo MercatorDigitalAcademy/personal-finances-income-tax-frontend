@@ -1,4 +1,4 @@
-package forms
+package forms.benefits
 
 import javax.inject.Inject
 

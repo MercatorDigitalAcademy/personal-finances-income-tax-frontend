@@ -1,43 +1,43 @@
 package controllers.benefits
 
 import base.SpecBase
-import forms.$className$FormProvider
+import forms.SubmitChildrenFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.$className$Page
+import pages.SubmitChildrenPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.$className$View
+import views.html.SubmitChildrenView
 
 import scala.concurrent.Future
 
-class $className$ControllerSpec extends SpecBase with MockitoSugar {
+class SubmitChildrenControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new $className$FormProvider()
+  val formProvider = new SubmitChildrenFormProvider()
   val form = formProvider()
 
-  lazy val $className;format="decap"$Route = routes.$className$Controller.onPageLoad(NormalMode).url
+  lazy val submitChildrenRoute = routes.SubmitChildrenController.onPageLoad(NormalMode).url
 
-  "$className$ Controller" - {
+  "SubmitChildren Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, $className;format="decap"$Route)
+        val request = FakeRequest(GET, submitChildrenRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[SubmitChildrenView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -46,14 +46,14 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set($className$Page, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(SubmitChildrenPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, $className;format="decap"$Route)
+        val request = FakeRequest(GET, submitChildrenRoute)
 
-        val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[SubmitChildrenView]
 
         val result = route(application, request).value
 
@@ -78,7 +78,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, $className;format="decap"$Route)
+          FakeRequest(POST, submitChildrenRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -94,12 +94,12 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, $className;format="decap"$Route)
+          FakeRequest(POST, submitChildrenRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[SubmitChildrenView]
 
         val result = route(application, request).value
 
@@ -113,7 +113,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, $className;format="decap"$Route)
+        val request = FakeRequest(GET, submitChildrenRoute)
 
         val result = route(application, request).value
 
@@ -128,7 +128,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, $className;format="decap"$Route)
+          FakeRequest(POST, submitChildrenRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value

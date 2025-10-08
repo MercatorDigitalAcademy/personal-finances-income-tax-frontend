@@ -8,9 +8,9 @@ sealed trait DlaRate
 
 object DlaRate extends Enumerable.Implicits {
 
-  case object Higher extends WithName("higher") with DlaRate
-  case object Middle extends WithName("middle") with DlaRate
-  case object Lower extends WithName("lower") with DlaRate
+  case object Higher extends WithName("Higher") with DlaRate
+  case object Middle extends WithName("Middle") with DlaRate
+  case object Lower extends WithName("Lower") with DlaRate
 
   val values: Seq[DlaRate] = Seq(
     Higher,

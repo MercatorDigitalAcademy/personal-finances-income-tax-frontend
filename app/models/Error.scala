@@ -1,9 +1,13 @@
 package models
+import play.api.libs.json.{JsValue, Json, OFormat}
 
-class Error extends Exception {}
+
 case object CannotSaveChildError extends Error
 
-import play.api.libs.json.{JsValue, Json, OFormat}
+trait ServiceError extends Exception
+
+case class HttpParserError(status: Int) extends ServiceError
+case class ConnectorError(statusCode: Int, message: String) extends ServiceError
 
 case class ApiError(status: Int, body: ApiErrorBody) {
 

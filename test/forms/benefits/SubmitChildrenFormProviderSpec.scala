@@ -3,12 +3,12 @@ package forms.benefits
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class $className$FormProviderSpec extends BooleanFieldBehaviours {
+class SubmitChildrenFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "$className;format="decap"$.error.required"
+  val requiredKey = "submitChildren.error.required"
   val invalidKey = "error.boolean"
 
-  val form = new $className$FormProvider()()
+  val form = new SubmitChildrenFormProvider()()
 
   ".value" - {
 

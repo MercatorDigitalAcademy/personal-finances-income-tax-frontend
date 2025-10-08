@@ -1,4 +1,4 @@
-package pages
+package pages.benefits
 
 import play.api.libs.json.JsPath
 

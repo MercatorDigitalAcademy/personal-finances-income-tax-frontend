@@ -6,11 +6,11 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, index: Int, child: Child)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, index: Int, child: Option[Child])(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("deleteChild.title"))) {
 
-
+@{if (child.isDefined){
 <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
         @child.childsName
@@ -25,6 +25,7 @@
         @child.dlaRate
     </dd>
 </div>
+}else {""}}
 
 
     @formHelper(action = controllers.benefits.routes.DeleteChildController.onSubmit(index), Symbol("autoComplete") -> "off") {

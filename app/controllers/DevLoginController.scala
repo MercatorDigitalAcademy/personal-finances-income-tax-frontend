@@ -24,7 +24,7 @@ class DevLoginController @Inject() (
       _.get("username").flatMap(_.headOption)
     ) match {
       case Some(username) =>
-        Redirect(controllers.benefits.routes.IndexController.onPageLoad())
+        Redirect(controllers.benefits.routes.StartController.onPageLoad())
           .withSession("userId" -> username)
       case None =>
         Redirect(routes.DevLoginController.showLogin())

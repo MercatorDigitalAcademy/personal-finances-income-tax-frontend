@@ -17,7 +17,7 @@
 package controllers.benefits
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
-import models.UserAnswers
+import models.{FetchedBenefits, UserAnswers}
 import play.api.i18n.I18nSupport
 import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -36,8 +36,9 @@ class IndexController @Inject() (
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData) { implicit request =>
+  def onPageLoad(userId: String): Action[AnyContent] = (identify andThen getData) { implicit request =>
     sessionRepository.set(UserAnswers(request.userId))
+
     logger.info(s"Session: ${request.session}")
     Ok(view())
   }

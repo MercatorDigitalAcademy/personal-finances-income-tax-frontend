@@ -33,21 +33,22 @@ class DeleteChildController @Inject() (
 
   def onPageLoad(mode: Mode, index: Int): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val child = request.userAnswers.get(ChildWithIndex(index)).map(child => child).getOrElse(Child(childsName = "???", childsBirthDate = LocalDate.of(2018,1,2), qualifiesForDla = false, dlaRate = None))
+      request.userAnswers.get(ChildWithIndex(index)) match {
+        case Some(value) => Ok(view(form, mode, index, Some(value)))
+        case None => Ok(view(form, mode, index, None))
+      }
 
-      Ok(view(form, mode, index, child))
     }
 
   def onSubmit(mode: Mode, index: Int): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val child = request.userAnswers.get(ChildWithIndex(index)).map(child => child).getOrElse(Child(childsName = "???", childsBirthDate = LocalDate.of(2018,1,2), qualifiesForDla = false, dlaRate = None))
 
       form
         .bindFromRequest()
         .fold(
           formWithErrors =>
             Future.successful(
-              BadRequest(view(formWithErrors, mode, index, child))
+              BadRequest(view(formWithErrors, mode, index, None))
             ),
           value => {
             if (value) {

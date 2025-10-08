@@ -1,4 +1,4 @@
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.benefits
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}

@@ -31,10 +31,12 @@ class AddAChildController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val ua = request.userAnswers
       val existingChildren = request.userAnswers.get(ChildGroup).getOrElse(Nil)
       logger.info(s"[AddAChildController][onPageLoad] existing child List: $existingChildren")
+      logger.info(s"[AddAChildController][onPageLoad] userAnswers: $ua")
       val nextIndex = existingChildren.length
-      val ua = request.userAnswers
+
       val list = SummaryListViewModel(
         rows = Seq(
           AddAChildSummary.row(ua)
@@ -79,7 +81,7 @@ class AddAChildController @Inject() (
             } else {
               Future.successful(
                 Redirect(
-                  controllers.benefits.routes.HomeController.onPageLoad()
+                  controllers.benefits.routes.SubmitChildrenController.onPageLoad()
                 )
               )
             }

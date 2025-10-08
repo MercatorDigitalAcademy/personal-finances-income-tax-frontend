@@ -23,7 +23,7 @@ import uk.gov.hmrc.http.HttpResponse
 trait Parser {
 
   protected val parserName: String
-  protected val service : String = "income-tax-property-frontend"
+  protected val service : String = "personal-finance-dashboard-frontend"
 
   def logMessage(response:HttpResponse): String ={
     s"[$parserName][read] Received ${response.status} from $service API. Body:${response.body}"
