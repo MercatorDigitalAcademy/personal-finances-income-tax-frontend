@@ -29,7 +29,7 @@ class LanguageSwitchController @Inject() (
 ) extends LanguageController(languageUtils = languageUtils, cc = cc) {
 
   override def fallbackURL: String =
-    controllers.benefits.routes.HomeController.onPageLoad().url
+    routes.EstimateIncomeTaxController.onPageLoad().url
 
   override def languageMap: Map[String, Lang] = appConfig.languageMap
 }

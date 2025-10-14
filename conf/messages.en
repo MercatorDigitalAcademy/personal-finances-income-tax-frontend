@@ -10,7 +10,7 @@ index.guidance = This is a Mercator Academy to assist the Academy Department in 
 welcome.title = welcome
 welcome.heading = welcome
 
-devLogin.heading = Dev Login View
+devLogin.heading = Income Tax Login
 devLogin.title = This is a temporary fake login for development purposes
 devLogin.l1 = This message comes from conf/messages.en devlogin.l1
 devLogin.guidance = Find out where I come from...
@@ -78,3 +78,22 @@ submitChildren.heading = submitChildren
 submitChildren.checkYourAnswersLabel = submitChildren
 submitChildren.error.required = Select yes if submitChildren
 submitChildren.change.hidden = SubmitChildren
+
+annualIncome.title = AnnualIncome
+annualIncome.heading = AnnualIncome
+annualIncome.checkYourAnswersLabel = AnnualIncome
+annualIncome.error.nonNumeric = Enter your annualIncome using numbers and a decimal point
+annualIncome.error.required = Enter your annualIncome
+annualIncome.error.invalidNumeric = Enter your annualIncome using up to two decimal places
+annualIncome.error.aboveMaximum = AnnualIncome must be {0} or less
+annualIncome.error.belowMinimum = AnnualIncome must be {0} or more
+annualIncome.change.hidden = AnnualIncome
+
+estimateIncomeTax.title = estimateIncomeTax
+estimateIncomeTax.heading = estimateIncomeTax
+
+isOverPensionAge.title = isOverPensionAge
+isOverPensionAge.heading = isOverPensionAge
+isOverPensionAge.checkYourAnswersLabel = isOverPensionAge
+isOverPensionAge.error.required = Select yes if isOverPensionAge
+isOverPensionAge.change.hidden = IsOverPensionAge

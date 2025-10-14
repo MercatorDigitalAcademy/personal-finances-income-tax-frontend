@@ -57,7 +57,7 @@
         additionalHeadBlock = Some(head)
     ),
     serviceURLs = ServiceURLs(
-        serviceUrl = Some(controllers.benefits.routes.HomeController.onPageLoad().url),
+        serviceUrl = Some(routes.EstimateIncomeTaxController.onPageLoad().url),
         signOutUrl = if(showSignOut) Some(controllers.auth.routes.AuthController.signOut().url) else None
     ),
     isWelshTranslationAvailable = appConfig.languageTranslationEnabled,

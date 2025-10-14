@@ -35,7 +35,7 @@
     <p class="govuk-body">
         @govukButton(
             ButtonViewModel(messages("site.signIn"))
-                .asLink(controllers.benefits.routes.HomeController.onPageLoad().url)
+                .asLink(routes.EstimateIncomeTaxController.onPageLoad().url)
         )
     </p>
 }
