@@ -8,4 +8,8 @@
 @layout(pageTitle = titleNoForm(messages("estimateIncomeTax.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("estimateIncomeTax.heading")</h1>
+
+@govukButton(
+ButtonViewModel(messages("site.continue"))
+)
 }
