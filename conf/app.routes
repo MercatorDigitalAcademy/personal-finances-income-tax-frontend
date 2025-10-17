@@ -37,3 +37,6 @@ GET        /estimateIncomeTax                            controllers.EstimateInc
 GET        /isOverPensionAge                             controllers.IsOverPensionAgeController.onPageLoad()
 POST       /isOverPensionAge                             controllers.IsOverPensionAgeController.onSubmit()
 
+# Tax Form (income + tax year)
+GET        /tax-form                                     controllers.TaxFormController.onPageLoad()
+POST       /tax-form                                     controllers.TaxFormController.onSubmit()

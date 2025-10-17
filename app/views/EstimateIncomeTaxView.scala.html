@@ -1,15 +1,111 @@
+@*
+EstimateIncomeTaxView.scala.html
+Renders either:
+• Start page (no flash values)
+• Results page (flash contains income & taxYear)
+*@
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{Text, HtmlContent}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.{Breadcrumbs, BreadcrumbsItem}
+
 @this(
-        layout: templates.Layout,
-        govukButton: GovukButton
+layout: templates.Layout,
+govukButton: GovukButton,
+govukBreadcrumbs: GovukBreadcrumbs
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("estimateIncomeTax.title"))) {
+@defining(request.flash.get("income").flatMap(s => scala.util.Try(BigDecimal(s)).toOption)) { incomeOpt =>
+@defining(request.flash.get("taxYear")) { taxYearOpt =>
+@defining(incomeOpt.isDefined && taxYearOpt.isDefined) { hasData =>
+@defining(java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)) { fmt =>
 
-    <h1 class="govuk-heading-xl">@messages("estimateIncomeTax.heading")</h1>
+@layout(
+pageTitle = if (hasData) messages("estimateIncomeTax.title") else messages("start.title")
+) {
+
+@if(hasData) {
+@* ---------------- RESULTS ---------------- *@
+
+<h1 class="govuk-heading-xl">@messages("estimateIncomeTax.heading")</h1>
+
+@defining(services.TaxCalculator.calculate(incomeOpt.get)) { d =>
+<p class="govuk-body">
+    Tax year: <strong>@taxYearOpt.get</strong>
+</p>
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Gross income entered</dt>
+        <dd class="govuk-summary-list__value">@fmt.format(incomeOpt.get.bigDecimal)</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Income tax</dt>
+        <dd class="govuk-summary-list__value">@fmt.format(d.incomeTax.bigDecimal)</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">National Insurance</dt>
+        <dd class="govuk-summary-list__value">@fmt.format(d.nationalInsurance.bigDecimal)</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Net income</dt>
+        <dd class="govuk-summary-list__value"><strong>@fmt.format(d.netIncome.bigDecimal)</strong></dd>
+    </div>
+</dl>
+}
 
 @govukButton(
-ButtonViewModel(messages("site.continue"))
+Button(
+content = Text(messages("site.continue")),
+href    = Some(routes.TaxFormController.onPageLoad().url)
+)
+)
+
+} else {
+@* ---------------- START PAGE ---------------- *@
+
+@govukBreadcrumbs(
+Breadcrumbs(
+items = Seq(
+BreadcrumbsItem(content = Text(messages("start.bc.home")),      href = Some("#")),
+BreadcrumbsItem(content = Text(messages("start.bc.money")),     href = Some("#")),
+BreadcrumbsItem(content = Text(messages("start.bc.incomeTax")), href = Some("#"))
+)
+)
+)
+
+<h1 class="govuk-heading-xl">@messages("start.heading")</h1>
+
+<p class="govuk-body">@messages("start.p1")</p>
+<p class="govuk-body">@messages("start.p2")</p>
+
+<p class="govuk-body">@messages("start.thisTellsYou")</p>
+<ul class="govuk-list govuk-list--bullet">
+    <li>@messages("start.li.payTax")</li>
+    <li>@messages("start.li.pension")</li>
+    <li>@messages("start.li.studentLoan")</li>
+</ul>
+
+<div class="govuk-inset-text">
+    @messages("start.inset1.pre")
+    <a class="govuk-link" href="#">@messages("start.inset1.link")</a>
+    @messages("start.inset1.post")
+</div>
+
+<p class="govuk-body">
+    @messages("start.refund.pre")
+    <a class="govuk-link" href="#">@messages("start.refund.link")</a>.
+</p>
+
+@govukButton(
+Button(
+content= Text(messages("site.startNow")),
+href          = Some(routes.TaxFormController.onPageLoad().url),
+isStartButton = true
+)
 )
 }
+}
+}}}}
