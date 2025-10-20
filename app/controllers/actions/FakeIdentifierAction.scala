@@ -22,7 +22,7 @@ class FakeIdentifierAction @Inject() (
         block(IdentifierRequest(request, userId))
       case None =>
         Future.successful(
-          Results.Redirect(controllers.routes.DevLoginController.showLogin())
+          Results.Redirect(controllers.routes.LogoutController.onPageLoad)
         )
     }
   }

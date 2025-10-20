@@ -20,16 +20,30 @@ import com.google.inject.{Inject, Singleton}
 import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.RequestHeader
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class FrontendAppConfig @Inject() (configuration: Configuration) {
+class FrontendAppConfig @Inject() (configuration: Configuration, servicesConfig: ServicesConfig) {
 
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
   val postBenefits = "http://localhost:9000/entitlements"
   val getBenefitsForUser = "http://localhost:9000/entitlements-for-user"
 
+  private def loadConfig(key: String): String = configuration.get[String](key)
+
+  val authUrl: String = servicesConfig.baseUrl("auth")
+  val benefitsUrl: String = servicesConfig.baseUrl("benefits")
+  val dashboardUrl: String = servicesConfig.baseUrl("dashboard")
+  val incomeTaxUrl: String = servicesConfig.baseUrl("income-tax")
+  val templateUrl: String = servicesConfig.baseUrl("template")
+  lazy val loginUrl: String = loadConfig("urls.login")
+  lazy val loginContinueUrl: String = loadConfig("urls.dashboard")
+  lazy val returnToDashboardUrl: String = loadConfig("urls.dashboard")
   val signOutUrl: String       = configuration.get[String]("urls.signOut")
+  lazy val journeyStartBenefitsUrl: String = loadConfig("urls.journeyStartBenefits")
+  lazy val journeyStartIncomeTaxUrl: String = loadConfig("urls.journeyStartIncomeTax")
+  lazy val journeyStartTemplateUrl: String = loadConfig("urls.journeyStartIncomeTax")
 
   val languageTranslationEnabled: Boolean =
     configuration.get[Boolean]("features.welsh-translation")

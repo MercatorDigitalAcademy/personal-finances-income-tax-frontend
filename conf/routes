@@ -25,9 +25,7 @@ GET        /account/signed-out                          controllers.auth.SignedO
 
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
 
-# Dev login
-GET        /dev-login                                   controllers.DevLoginController.showLogin()
-POST       /dev-login                                   controllers.DevLoginController.submitLogin()
+GET         /sign-out                                          controllers.LogoutController.onPageLoad
 
 
 GET        /annualIncome                                 controllers.AnnualIncomeController.onPageLoad()

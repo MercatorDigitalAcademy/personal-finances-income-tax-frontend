@@ -51,7 +51,7 @@ lazy val microservice = (project in file("."))
       "controllers.routes._",
       "viewmodels.govuk.all._"
     ),
-    PlayKeys.playDefaultPort := 9005,
+    PlayKeys.playDefaultPort := 9003,
     scalacOptions ++= Seq(
       "-feature",
       "-deprecation",
