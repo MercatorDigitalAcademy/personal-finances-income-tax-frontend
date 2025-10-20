@@ -1,1 +1,5 @@
 # https://www.playframework.com/documentation/latest/ScalaI18N
+
+index.heading = Welcome to
+index.title = Personal Finance IN WELSH!!
+index.l1 = Some Welsh Phrase here!!

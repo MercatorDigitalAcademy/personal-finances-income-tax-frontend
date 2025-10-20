@@ -1,0 +1,49 @@
+@import viewmodels.InputWidth._
+
+@this(
+layout: templates.Layout,
+formHelper: FormWithCSRF,
+govukErrorSummary: GovukErrorSummary,
+govukInput: GovukInput,
+govukSelect: GovukSelect,
+govukButton: GovukButton
+)
+
+@(form: Form[_], taxYears: Seq[String])(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = title(form, messages("taxForm.title"))) {
+
+@formHelper(action = routes.TaxFormController.onSubmit(), Symbol("autoComplete") -> "off", Symbol("novalidate") -> "novalidate") {
+
+@if(form.errors.nonEmpty) {
+@govukErrorSummary(ErrorSummaryViewModel(form))
+}
+
+@govukInput(
+InputViewModel(
+field = form("annualIncome"),
+label = LabelViewModel(messages("taxForm.annualIncome.heading")).asPageHeading()
+)
+.withPrefix(PrefixOrSuffix(content = "£"))
+.withWidth(Fixed10)
+.withHint(HintViewModel(messages("taxForm.annualIncome.hint")))
+)
+
+@govukSelect(
+new uk.gov.hmrc.govukfrontend.views.viewmodels.select.Select(
+id    = "taxYear",
+name  = "taxYear",
+label = new uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label(
+content = uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text(messages("taxForm.taxYear.heading"))
+),
+items = Seq(
+new uk.gov.hmrc.govukfrontend.views.viewmodels.select.SelectItem(value = Some(""), text = messages("site.chooseOne"))
+) ++ taxYears.map(y => new uk.gov.hmrc.govukfrontend.views.viewmodels.select.SelectItem(value = Some(y), text = y))
+)
+)
+
+@govukButton(ButtonViewModel(messages("site.continue")))
+}
+
+
+}

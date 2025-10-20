@@ -4,7 +4,38 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index()
+
+->          /hmrc-frontend                               hmrcfrontend.Routes
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET        /                                            controllers.EstimateIncomeTaxController.onPageLoad()
+GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+
+GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+
+GET        /refresh-session                             controllers.KeepAliveController.keepAlive()
+
+GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
+
+
+GET        /account/sign-out                            controllers.auth.AuthController.signOut()
+GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
+
+GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
+
+GET         /sign-out                                          controllers.LogoutController.onPageLoad
+
+
+GET        /annualIncome                                 controllers.AnnualIncomeController.onPageLoad()
+POST       /annualIncome                                 controllers.AnnualIncomeController.onSubmit()
+
+GET        /estimateIncomeTax                            controllers.EstimateIncomeTaxController.onPageLoad()
+
+GET        /isOverPensionAge                             controllers.IsOverPensionAgeController.onPageLoad()
+POST       /isOverPensionAge                             controllers.IsOverPensionAgeController.onSubmit()
+
+# Tax Form (income + tax year)
+GET        /tax-form                                     controllers.TaxFormController.onPageLoad()
+POST       /tax-form                                     controllers.TaxFormController.onSubmit()

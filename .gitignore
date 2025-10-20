@@ -9,8 +9,7 @@ target
 /RUNNING_PID
 
 # For vscode metals users
-**.bloop
-**metals.sbt
+/.bloop
 /.metals
 /.vscode
-/.g8
+.g8

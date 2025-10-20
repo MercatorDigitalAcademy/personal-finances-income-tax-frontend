@@ -1,0 +1,133 @@
+site.continue = moving on...
+site.yes = Yes
+site.no = No
+site.change = Change me!!!
+
+index.heading = Welcome To -
+index.title = Personal Finance Frontend
+index.l1 = To infinity and beyond...🚀
+index.guidance = This is a Mercator Academy to assist the Academy Department in the upskilling of future cohorts!!
+welcome.title = welcome
+welcome.heading = welcome
+
+devLogin.heading = Income Tax Login
+devLogin.title = This is a temporary fake login for development purposes
+devLogin.l1 = This message comes from conf/messages.en devlogin.l1
+devLogin.guidance = Find out where I come from...
+
+continue.heading = This is a Content Page
+continue.title = It contains only information
+continue.l1 = It asks no questions of the user
+
+start.title = This is the start of the Benefits Journey
+start.heading = This is the start of the Benefits Journey
+
+isUserClaimingChb.title = Would you like to calculate your family benefits entitlements?
+isUserClaimingChb.heading = Would you like to calculate your family benefits entitlements?
+isUserClaimingChb.checkYourAnswersLabel = isUserClaimingChb
+isUserClaimingChb.error.required = Select yes if isUserClaimingChb
+isUserClaimingChb.change.hidden = IsUserClaimingChb
+
+addAChild.title = addAChild
+addAChild.heading = Would you like to add a child?
+addAChild.checkYourAnswersLabel = addAChild
+addAChild.error.required = Select yes if addAChild
+addAChild.change.hidden = AddAChild
+
+childsName.title = Please enter the full name for this child.
+childsName.heading = Please enter the full name for this child.
+childsName.checkYourAnswersLabel = childsName
+childsName.error.required = Enter the childs Name
+childsName.error.length = Childs Name must be 70 characters or less
+childsName.change.hidden = Childs Name
+
+childsBirthDate.title = Please enter the child's Date of Birth
+childsBirthDate.heading = What is {0}''s date of Birth?
+childsBirthDate.hint = For example, 22 05 2007.
+childsBirthDate.checkYourAnswersLabel = ChildsBirthDate
+childsBirthDate.error.required.all = Enter the childsBirthDate
+childsBirthDate.error.required.two = The childsBirthDate must include {0} and {1}
+childsBirthDate.error.required = The childsBirthDate must include {0}
+childsBirthDate.error.invalid = Enter a real ChildsBirthDate
+childsBirthDate.change.hidden = ChildsBirthDate
+
+dlaRate.title = At which rate is the child receiving Disability Living Allowance
+dlaRate.heading = At which rate is the child receiving Disability Living Allowance
+dlaRate.higher = Higher Rate
+dlaRate.middle = Middle Rate
+dlaRate.lower = Lower Rate
+dlaRate.checkYourAnswersLabel = Is the rate correct for this child?
+dlaRate.error.required = Select DlaRate
+dlaRate.change.hidden = DlaRate
+
+qualifiesForDLA.title = Is this Child receiving Disability Living Allowance?
+qualifiesForDLA.heading = Is this Child receiving Disability Living Allowance?
+qualifiesForDLA.checkYourAnswersLabel = qualifiesForDLA
+qualifiesForDLA.error.required = Select yes if qualifiesForDLA
+qualifiesForDLA.change.hidden = qualifiesForDLA
+
+
+deleteChild.title = deleteChild
+deleteChild.heading = deleteChild
+deleteChild.checkYourAnswersLabel = deleteChild
+deleteChild.error.required = Select yes if deleteChild
+deleteChild.change.hidden = DeleteChild
+
+submitChildren.title = submitChildren
+submitChildren.heading = submitChildren
+submitChildren.checkYourAnswersLabel = submitChildren
+submitChildren.error.required = Select yes if submitChildren
+submitChildren.change.hidden = SubmitChildren
+
+annualIncome.title = AnnualIncome
+annualIncome.heading = AnnualIncome
+annualIncome.checkYourAnswersLabel = AnnualIncome
+annualIncome.error.nonNumeric = Enter your annualIncome using numbers and a decimal point
+annualIncome.error.required = Enter your annualIncome
+annualIncome.error.invalidNumeric = Enter your annualIncome using up to two decimal places
+annualIncome.error.aboveMaximum = AnnualIncome must be {0} or less
+annualIncome.error.belowMinimum = AnnualIncome must be {0} or more
+annualIncome.change.hidden = AnnualIncome
+
+estimateIncomeTax.title = estimateIncomeTax
+estimateIncomeTax.heading = estimateIncomeTax
+
+isOverPensionAge.title = isOverPensionAge
+isOverPensionAge.heading = isOverPensionAge
+isOverPensionAge.checkYourAnswersLabel = isOverPensionAge
+isOverPensionAge.error.required = Select yes if isOverPensionAge
+isOverPensionAge.change.hidden = IsOverPensionAge
+
+# Tax Form
+taxForm.title=Enter your annual income and tax year
+taxForm.annualIncome.heading=What is your annual income before tax?
+taxForm.annualIncome.hint=For example, 34,000 or 34000.00
+taxForm.taxYear.heading=Which tax year does this apply to?
+site.chooseOne=Select a tax year
+
+# Errors (server + client)
+taxForm.annualIncome.error.required=Enter your annual income
+taxForm.annualIncome.error.invalidNumeric=Enter the amount in pounds and pence, using numbers only
+taxForm.annualIncome.error.nonNumeric=Enter the amount using numbers only
+taxForm.annualIncome.error.aboveMaximum=Income must be {0} or less
+taxForm.taxYear.error.required=Select a tax year
+taxForm.taxYear.error.invalid=Select a valid tax year option
+
+# Start page (landing)
+start.title = Estimate your Income Tax for the current year
+start.heading = Estimate your Income Tax for the current year
+start.bc.home = Home
+start.bc.money = Money and tax
+start.bc.incomeTax = Income Tax
+start.p1 = Use this service to estimate how much Income Tax and National Insurance you should pay for the current tax year.
+start.p2 = This service is for employees who pay tax and National Insurance each month through their employer.
+start.thisTellsYou = It tells you what your take-home pay will be after:
+start.li.payTax = paying tax
+start.li.pension = making any pension contributions
+start.li.studentLoan = making any student loan repayments
+start.inset1.pre = If you’re registered for Self Assessment, the
+start.inset1.link = Self Assessment tax calculator
+start.inset1.post =  can help you estimate your tax bill.
+start.refund.pre = You may be able to
+start.refund.link = claim a refund
+site.startNow = Start now
