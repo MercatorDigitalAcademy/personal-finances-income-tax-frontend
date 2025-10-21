@@ -6,9 +6,9 @@ import play.api.mvc._
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class FakeIdentifierAction @Inject() (
-                                       val bodyParsers: BodyParsers.Default
-                                     )(implicit val executionContext: ExecutionContext)
+class FakeIdentifierAction @Inject()(
+                                      val bodyParsers: BodyParsers.Default
+                                    )(implicit val executionContext: ExecutionContext)
   extends IdentifierAction {
 
   override def parser: BodyParsers.Default = bodyParsers

@@ -131,3 +131,10 @@ start.inset1.post =  can help you estimate your tax bill.
 start.refund.pre = You may be able to
 start.refund.link = claim a refund
 site.startNow = Start now
+
+# Pension age question
+isOverPensionAge.title = Are you over the State Pension age?
+isOverPensionAge.heading = Are you over the State Pension age?
+isOverPensionAge.error.required = Select yes if you are over the State Pension age
+isOverPensionAge.details.summary = Why we ask this
+isOverPensionAge.details.body = If you are over the State Pension age you may pay a different rate of National Insurance. We use this to estimate your take-home pay.

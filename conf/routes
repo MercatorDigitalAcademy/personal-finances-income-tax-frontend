@@ -1,7 +1,6 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # https://www.playframework.com/documentation/latest/ScalaRouting
-# ~~~~
 
 # An example controller showing a sample home page
 
@@ -10,22 +9,22 @@
 
 # Map static resources from the /public folder to the /assets URL path
 
-GET        /                                            controllers.EstimateIncomeTaxController.onPageLoad()
-GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET        /                                             controllers.EstimateIncomeTaxController.onPageLoad()
+GET        /assets/*file                                 controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET        /language/:lang                               controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /refresh-session                             controllers.KeepAliveController.keepAlive()
+GET        /refresh-session                              controllers.KeepAliveController.keepAlive()
 
-GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
+GET        /there-is-a-problem                           controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
 
-GET        /account/sign-out                            controllers.auth.AuthController.signOut()
-GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
+GET        /account/sign-out                             controllers.auth.AuthController.signOut()
+GET        /account/signed-out                           controllers.auth.SignedOutController.onPageLoad()
 
-GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
+GET        /unauthorised                                 controllers.UnauthorisedController.onPageLoad()
 
-GET         /sign-out                                          controllers.LogoutController.onPageLoad
+GET        /sign-out                                     controllers.LogoutController.onPageLoad
 
 
 GET        /annualIncome                                 controllers.AnnualIncomeController.onPageLoad()
@@ -39,3 +38,6 @@ POST       /isOverPensionAge                             controllers.IsOverPensi
 # Tax Form (income + tax year)
 GET        /tax-form                                     controllers.TaxFormController.onPageLoad()
 POST       /tax-form                                     controllers.TaxFormController.onSubmit()
+
+GET        /isOverPensionAge                             controllers.IsOverPensionAgeController.onPageLoad()
+POST       /isOverPensionAge                             controllers.IsOverPensionAgeController.onSubmit()

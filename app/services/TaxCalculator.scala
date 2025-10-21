@@ -18,7 +18,7 @@ object TaxCalculator {
     Deductions(income, incomeTax, ni, net)
   }
 
-  // ---------- Income Tax (England) ----------
+  // ---------- Income Tax ----------
   // Personal allowance 12,570; tapers 1-for-2 above 100k; zero at 125,140.
   private val PersonalAllowance = BigDecimal(12570)
   private val AllowanceTaperStart = BigDecimal(100000)
@@ -42,20 +42,20 @@ object TaxCalculator {
 
     val basicPortion = taxable.min(BasicRateUpper - PersonalAllowance).max(0)
     val higherPortion = (taxable - basicPortion).min(HigherRateUpper - BasicRateUpper).max(0)
-    val addlPortion = (taxable - basicPortion - higherPortion).max(0)
+    val addPortion = (taxable - basicPortion - higherPortion).max(0)
 
     val basicTax = basicPortion * BasicRate
     val higherTax = higherPortion * HigherRate
-    val addlTax = addlPortion * AdditionalRate
+    val addTax = addPortion * AdditionalRate
 
     // Extra 40% on lost allowance between 100k-125,140
     val lostAllowance = (PersonalAllowance - allowance).max(0)
     val lostAllowanceTax = lostAllowance * HigherRate
 
-    basicTax + higherTax + addlTax + lostAllowanceTax
+    basicTax + higherTax + addTax + lostAllowanceTax
   }
 
-  // ---------- National Insurance (simplified demo) ----------
+  // ---------- National Insurance ----------
   // 8% between 12,576 and 50,268; 2% above 50,268
   private val NILower = BigDecimal(12576)
   private val NIMid = BigDecimal(50268)

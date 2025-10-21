@@ -2,55 +2,49 @@ package controllers
 
 import controllers.actions._
 import forms.IsOverPensionAgeFormProvider
-import models.Mode
-import navigation.Navigator
-import pages.IsOverPensionAgePage
+import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.IsOverPensionAgeView
 
-import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class IsOverPensionAgeController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: IsOverPensionAgeFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: IsOverPensionAgeView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                            override val messagesApi: MessagesApi,
+                                            identify: IdentifierAction,
+                                            val controllerComponents: MessagesControllerComponents,
+                                            view: IsOverPensionAgeView,
+                                            formProvider: IsOverPensionAgeFormProvider
+                                          )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  private val form = formProvider()
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
-      val preparedForm = request.userAnswers.get(IsOverPensionAgePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm))
+  def onPageLoad(): Action[AnyContent] = identify { implicit request =>
+    Ok(view(form))
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(): Action[AnyContent] = identify { implicit request =>
+    form.bindFromRequest().fold(
+      formWithErrors => BadRequest(view(formWithErrors)),
+      isOverPensionAge => {
+        val incomeOpt = request.session.get("income")
+        val yearOpt = request.session.get("taxYear")
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors))),
+        (incomeOpt, yearOpt) match {
+          case (Some(income), Some(year)) =>
+            Redirect(routes.EstimateIncomeTaxController.onPageLoad())
+              .flashing(
+                "income" -> income,
+                "taxYear" -> year,
+                "isOverPensionAge" -> isOverPensionAge.toString
+              )
+              .removingFromSession("income", "taxYear")(request)
 
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IsOverPensionAgePage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(IsOverPensionAgePage, updatedAnswers))
-      )
+          case _ =>
+            Redirect(routes.TaxFormController.onPageLoad())
+        }
+      }
+    )
   }
 }

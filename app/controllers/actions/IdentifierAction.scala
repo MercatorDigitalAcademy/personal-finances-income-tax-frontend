@@ -29,15 +29,15 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import scala.concurrent.{ExecutionContext, Future}
 
 trait IdentifierAction
-    extends ActionBuilder[IdentifierRequest, AnyContent]
+  extends ActionBuilder[IdentifierRequest, AnyContent]
     with ActionFunction[Request, IdentifierRequest]
 
-class AuthenticatedIdentifierAction @Inject() (
-  override val authConnector: AuthConnector,
-  val config: FrontendAppConfig,
-  val parser: BodyParsers.Default
-)(implicit val executionContext: ExecutionContext)
-    extends IdentifierAction
+class AuthenticatedIdentifierAction @Inject()(
+                                               override val authConnector: AuthConnector,
+                                               val config: FrontendAppConfig,
+                                               val parser: BodyParsers.Default
+                                             )(implicit val executionContext: ExecutionContext)
+  extends IdentifierAction
     with AuthorisedFunctions {
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
@@ -45,10 +45,10 @@ class AuthenticatedIdentifierAction @Inject() (
   }
 }
 
-class SessionIdentifierAction @Inject() (
-  val parser: BodyParsers.Default
-)(implicit val executionContext: ExecutionContext)
-    extends IdentifierAction {
+class SessionIdentifierAction @Inject()(
+                                         val parser: BodyParsers.Default
+                                       )(implicit val executionContext: ExecutionContext)
+  extends IdentifierAction {
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
 
@@ -57,7 +57,7 @@ class SessionIdentifierAction @Inject() (
     hc.sessionId match {
       case Some(session) =>
         block(IdentifierRequest(request, session.value))
-      case None          =>
+      case None =>
         Future.successful(Redirect(routes.LogoutController.onPageLoad))
         Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
     }

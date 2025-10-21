@@ -13,6 +13,6 @@ class AnnualIncomeFormProvider @Inject() extends Mappings {
         "annualIncome.error.invalidNumeric",
         "annualIncome.error.nonNumeric"
       )
-      .verifying(maximumCurrency(Int.MaxValue, "annualIncome.error.aboveMaximum"))
+        .verifying(maximumCurrency(Int.MaxValue, "annualIncome.error.aboveMaximum"))
     )
 }
