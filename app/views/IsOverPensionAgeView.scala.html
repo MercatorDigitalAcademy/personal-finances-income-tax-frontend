@@ -1,6 +1,5 @@
 @*
 IsOverPensionAgeView.scala.html
-Yes/No radios in HMRC/GOV.UK style
 *@
 
 @this(
@@ -36,42 +35,40 @@ Symbol("novalidate")   -> "novalidate"
 @govukRadios(
 Radios(
 idPrefix = Some("value"),
-name     = "value",
-fieldset = Some(
+    name = "value",
+    fieldset = Some(
 Fieldset(
 legend = Some(
 Legend(
-content       = Text(messages("isOverPensionAge.heading")),
-isPageHeading = true,
-classes       = "govuk-fieldset__legend--xl"
-)
-)
-)
+    content = Text(messages("isOverPensionAge.heading")),
+    isPageHeading = true,
+    classes = "govuk-fieldset__legend--xl"
+)))
 ),
+
 items = Seq(
 RadioItem(
-value   = Some("true"),
-content = Text(messages("site.yes")),
-checked = form("value").value.contains("true")
+    value = Some("true"),
+    content = Text(messages("site.yes")),
+    checked = form("value").value.contains("true")
 ),
+
 RadioItem(
-value   = Some("false"),
-content = Text(messages("site.no")),
-checked = form("value").value.contains("false")
-)
-),
+    value = Some("false"),
+    content = Text(messages("site.no")),
+    checked = form("value").value.contains("false")
+)),
+
 errorMessage = form.error("value").map(
 e => ErrorMessage(content = Text(messages(e.message)))
 )
-)
-)
+))
 
 @govukDetails(
 Details(
-summary = Text(messages("isOverPensionAge.details.summary")),
-content = Text(messages("isOverPensionAge.details.body"))
-)
-)
+    summary = Text(messages("isOverPensionAge.details.summary")),
+    content = Text(messages("isOverPensionAge.details.body"))
+))
 
 @govukButton(
 Button(content = Text(messages("site.continue")))

@@ -24,26 +24,24 @@ govukButton: GovukButton
 @govukSummaryList(
 SummaryList(rows = Seq(
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.income.label"))),
-value   = Value(Text("£" + income)),
-actions = Some(Actions(items = Seq(
-ActionItem(
-href = routes.TaxFormController.onPageLoad().url,
+    key = Key(Text(messages("checkYourAnswers.income.label"))),
+    value = Value(Text("£" + income)),
+    actions = Some(Actions(items = Seq(
+ActionItem(  href = routes.TaxFormController.onPageLoad().url,
 content = Text(messages("site.change"))
 )
 )))
 ),
+
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.pension.label"))),
-value   = Value(Text(if (isOverPensionAge) messages("site.yes") else messages("site.no"))),
-actions = Some(Actions(items = Seq(
+    key = Key(Text(messages("checkYourAnswers.pension.label"))),
+    value = Value(Text(if (isOverPensionAge) messages("site.yes") else messages("site.no"))),
+    actions = Some(Actions(items = Seq(
 ActionItem(
 href = routes.IsOverPensionAgeController.onPageLoad().url,
 content = Text(messages("site.change"))
 )
 ))))
-
-
 ))
 )
 
@@ -53,28 +51,32 @@ content = Text(messages("site.change"))
 @govukSummaryList(
 SummaryList(rows = Seq(
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.taxCode"))),
-value   = Value(Text(messages("checkYourAnswers.notProvided"))),
-actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+    key = Key(Text(messages("checkYourAnswers.taxCode"))),
+    value = Value(Text(messages("checkYourAnswers.notProvided"))),
+    actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
 ),
+
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.scottish"))),
-value   = Value(Text(messages("checkYourAnswers.notProvided"))),
-actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+    key = Key(Text(messages("checkYourAnswers.scottish"))),
+    value = Value(Text(messages("checkYourAnswers.notProvided"))),
+    actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
 ),
+
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.pensionContrib"))),
-value   = Value(Text(messages("checkYourAnswers.notProvided"))),
-actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+    key = Key(Text(messages("checkYourAnswers.pensionContrib"))),
+    value = Value(Text(messages("checkYourAnswers.notProvided"))),
+    actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
 ),
+
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.studentLoan"))),
-value   = Value(Text(messages("checkYourAnswers.notProvided"))),
-actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+    key = Key(Text(messages("checkYourAnswers.studentLoan"))),
+    value = Value(Text(messages("checkYourAnswers.notProvided"))),
+    actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
 ),
+
 SummaryListRow(
-key     = Key(Text(messages("checkYourAnswers.postgradLoan"))),
-value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+key= Key(Text(messages("checkYourAnswers.postgradLoan"))),
+value = Value(Text(messages("checkYourAnswers.notProvided"))),
 actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
 )
 ))
