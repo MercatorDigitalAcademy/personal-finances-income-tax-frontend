@@ -41,3 +41,6 @@ POST       /tax-form                                     controllers.TaxFormCont
 
 GET        /isOverPensionAge                             controllers.IsOverPensionAgeController.onPageLoad()
 POST       /isOverPensionAge                             controllers.IsOverPensionAgeController.onSubmit()
+
+GET        /check-your-answers                           controllers.CheckYourAnswersController.onPageLoad()
+POST       /check-your-answers                           controllers.CheckYourAnswersController.onSubmit()

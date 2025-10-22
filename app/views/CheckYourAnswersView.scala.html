@@ -1,0 +1,86 @@
+@*
+CheckYourAnswersView.scala.html
+*@
+
+@this(
+layout: templates.Layout,
+formHelper: FormWithCSRF,
+govukSummaryList: GovukSummaryList,
+govukButton: GovukButton
+)
+
+@(income: String, taxYear: String, isOverPensionAge: Boolean)(implicit request: Request[_], messages: Messages)
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+
+@layout(pageTitle = messages("checkYourAnswers.title")) {
+
+<h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswers.section1")</h2>
+
+@govukSummaryList(
+SummaryList(rows = Seq(
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.income.label"))),
+value   = Value(Text("£" + income)),
+actions = Some(Actions(items = Seq(
+ActionItem(
+href = routes.TaxFormController.onPageLoad().url,
+content = Text(messages("site.change"))
+)
+)))
+),
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.pension.label"))),
+value   = Value(Text(if (isOverPensionAge) messages("site.yes") else messages("site.no"))),
+actions = Some(Actions(items = Seq(
+ActionItem(
+href = routes.IsOverPensionAgeController.onPageLoad().url,
+content = Text(messages("site.change"))
+)
+))))
+
+
+))
+)
+
+<h2 class="govuk-heading-m govuk-!-margin-top-7">@messages("checkYourAnswers.section2")</h2>
+<p class="govuk-body">@messages("checkYourAnswers.optionalHint")</p>
+
+@govukSummaryList(
+SummaryList(rows = Seq(
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.taxCode"))),
+value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+),
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.scottish"))),
+value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+),
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.pensionContrib"))),
+value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+),
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.studentLoan"))),
+value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+),
+SummaryListRow(
+key     = Key(Text(messages("checkYourAnswers.postgradLoan"))),
+value   = Value(Text(messages("checkYourAnswers.notProvided"))),
+actions = Some(Actions(items = Seq(ActionItem("#", Text(messages("site.add"))))))
+)
+))
+)
+
+@formHelper(action = routes.CheckYourAnswersController.onSubmit()) {
+@govukButton(Button(content = Text(messages("checkYourAnswers.button"))))
+}
+}

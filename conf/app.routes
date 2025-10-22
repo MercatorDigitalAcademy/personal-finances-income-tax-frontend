@@ -10,7 +10,7 @@
 
 # Map static resources from the /public folder to the /assets URL path
 
-GET         /sign-out                                          controllers.LogoutController.onPageLoad
+GET         /sign-out                                    controllers.LogoutController.onPageLoad
 
 GET         /                                            controllers.EstimateIncomeTaxController.onPageLoad()
 
@@ -26,7 +26,7 @@ GET         /there-is-a-problem                          controllers.JourneyReco
 GET         /account/sign-out                            controllers.auth.AuthController.signOut()
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
 
-GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
+GET        /unauthorised                                 controllers.UnauthorisedController.onPageLoad()
 
 GET        /annualIncome                                 controllers.AnnualIncomeController.onPageLoad()
 POST       /annualIncome                                 controllers.AnnualIncomeController.onSubmit()
@@ -40,5 +40,8 @@ POST       /isOverPensionAge                             controllers.IsOverPensi
 GET        /tax-form                                     controllers.TaxFormController.onPageLoad()
 POST       /tax-form                                     controllers.TaxFormController.onSubmit()
 
-GET   /isOverPensionAge   controllers.IsOverPensionAgeController.onPageLoad()
-POST  /isOverPensionAge   controllers.IsOverPensionAgeController.onSubmit()
+GET        /isOverPensionAge                             controllers.IsOverPensionAgeController.onPageLoad()
+POST       /isOverPensionAge                             controllers.IsOverPensionAgeController.onSubmit()
+
+GET        /check-your-answers                           controllers.CheckYourAnswersController.onPageLoad()
+POST       /check-your-answers                           controllers.CheckYourAnswersController.onSubmit()

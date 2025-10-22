@@ -1,4 +1,4 @@
-site.continue = moving on...
+site.continue = Continue
 site.yes = Yes
 site.no = No
 site.change = Change me!!!
@@ -138,3 +138,19 @@ isOverPensionAge.heading = Are you over the State Pension age?
 isOverPensionAge.error.required = Select yes if you are over the State Pension age
 isOverPensionAge.details.summary = Why we ask this
 isOverPensionAge.details.body = If you are over the State Pension age you may pay a different rate of National Insurance. We use this to estimate your take-home pay.
+
+checkYourAnswers.title = Check your answers
+checkYourAnswers.heading = Check your answers
+checkYourAnswers.section1 = Your Income
+checkYourAnswers.section2 = Additional questions (Optional)
+checkYourAnswers.optionalHint = Your results may be more accurate if you answer additional questions.
+
+checkYourAnswers.income.label = Gross income
+checkYourAnswers.pension.label = Over State Pension age
+checkYourAnswers.taxCode = Tax Code
+checkYourAnswers.scottish = Scottish Income Tax
+checkYourAnswers.pensionContrib = Pension contributions
+checkYourAnswers.studentLoan = Student loan
+checkYourAnswers.postgradLoan = Postgraduate loan
+checkYourAnswers.button = Calculate take-home pay
+checkYourAnswers.notProvided = Not provided
