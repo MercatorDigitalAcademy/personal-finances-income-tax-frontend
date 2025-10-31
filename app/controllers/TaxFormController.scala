@@ -41,12 +41,11 @@ class TaxFormController @Inject()(
     formProvider(years).bindFromRequest().fold(
       errs => BadRequest(view(errs, years)),
       data => {
-        Redirect(
-          routes.EstimateIncomeTaxController.onPageLoad()
-        ).flashing(
-          "income" -> data.annualIncome.bigDecimal.toPlainString,
-          "taxYear" -> data.taxYear
-        )
+        Redirect(routes.IsOverPensionAgeController.onPageLoad())
+          .addingToSession(
+            "income" -> data.annualIncome.bigDecimal.toPlainString,
+            "taxYear" -> data.taxYear
+          )
       }
     )
   }

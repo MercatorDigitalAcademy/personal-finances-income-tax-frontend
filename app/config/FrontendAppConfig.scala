@@ -19,13 +19,12 @@ package config
 import com.google.inject.{Inject, Singleton}
 import play.api.Configuration
 import play.api.i18n.Lang
-import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class FrontendAppConfig @Inject() (configuration: Configuration, servicesConfig: ServicesConfig) {
+class FrontendAppConfig @Inject()(configuration: Configuration, servicesConfig: ServicesConfig) {
 
-  val host: String    = configuration.get[String]("host")
+  val host: String = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
   val postBenefits = "http://localhost:9000/entitlements"
   val getBenefitsForUser = "http://localhost:9000/entitlements-for-user"
@@ -40,7 +39,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration, servicesConfig:
   lazy val loginUrl: String = loadConfig("urls.login")
   lazy val loginContinueUrl: String = loadConfig("urls.dashboard")
   lazy val returnToDashboardUrl: String = loadConfig("urls.dashboard")
-  val signOutUrl: String       = configuration.get[String]("urls.signOut")
+  val signOutUrl: String = configuration.get[String]("urls.signOut")
   lazy val journeyStartBenefitsUrl: String = loadConfig("urls.journeyStartBenefits")
   lazy val journeyStartIncomeTaxUrl: String = loadConfig("urls.journeyStartIncomeTax")
   lazy val journeyStartTemplateUrl: String = loadConfig("urls.journeyStartIncomeTax")
@@ -53,7 +52,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration, servicesConfig:
     "cy" -> Lang("cy")
   )
 
-  val timeout: Int   = configuration.get[Int]("timeout-dialog.timeout")
+  val timeout: Int = configuration.get[Int]("timeout-dialog.timeout")
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
 
   val cacheTtl: Long = configuration.get[Int]("mongodb.timeToLiveInSeconds")

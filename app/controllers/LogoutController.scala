@@ -8,10 +8,10 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import scala.concurrent.ExecutionContext
 
-class LogoutController @Inject() (
-                                   appConfig: FrontendAppConfig,
-                                   val controllerComponents: MessagesControllerComponents
-                                 )(implicit val ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class LogoutController @Inject()(
+                                  appConfig: FrontendAppConfig,
+                                  val controllerComponents: MessagesControllerComponents
+                                )(implicit val ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action {
     request =>
