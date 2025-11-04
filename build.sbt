@@ -1,7 +1,7 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
 
-lazy val appName: String = """personal-finances-dashboard-frontend"""
+lazy val appName: String = """personal-finances-income-tax-frontend"""
 organization := "com.academy"
 
 ThisBuild / version := "1.0-SNAPSHOT"

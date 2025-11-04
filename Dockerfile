@@ -5,13 +5,13 @@ COPY . .
 RUN sbt clean dist
 
 # Stage 2: Runtime
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=builder /build/target/universal/*.zip ./
 RUN apt-get update && apt-get install -y unzip && \
-    unzip *.zip && rm *.zip && mv personal-finances-dashboard-frontend-*/* /app && \
-    rm -rf personal-finances-dashboard-frontend
+    unzip *.zip && rm *.zip && mv personal-finances-income-tax-frontend-*/* /app && \
+    rm -rf personal-finances-income-tax-frontend
 
 EXPOSE 9000
 
-CMD ["sh", "-c", "rm -f /app/RUNNING_PID && /app/bin/personal-finances-dashboard-frontend -Dplay.http.secret.key=$SECRET_KEY"]
+CMD ["sh", "-c", "rm -f /app/RUNNING_PID && /app/bin/personal-finances-income-tax-frontend -Dplay.http.secret.key=$SECRET_KEY"]
