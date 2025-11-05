@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install -y unzip && \
 
 EXPOSE 9000
 
-CMD ["sh", "-c", "rm -f /app/RUNNING_PID && /app/bin/personal-finances-income-tax-frontend -Dplay.http.secret.key=$SECRET_KEY"]
+CMD ["sh", "-c", "rm -f /app/RUNNING_PID && /app/bin/personal-finances-income-tax-frontend -Dplay.http.secret.key=$SECRET_KEY -Dmongodb.uri=$MONGODB_URI -Dincome-tax-service.url=$INCOME_TAX_SERVICE_URL"]
