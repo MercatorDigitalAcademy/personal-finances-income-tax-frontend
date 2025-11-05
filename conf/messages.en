@@ -154,3 +154,14 @@ checkYourAnswers.studentLoan = Student loan
 checkYourAnswers.postgradLoan = Postgraduate loan
 checkYourAnswers.button = Calculate take-home pay
 checkYourAnswers.notProvided = Not provided
+
+results.heading = Your estimated take-home pay for {0}
+results.taxYear = Tax year:
+results.per.year = a year
+results.howWeCalculated = How we calculated this
+results.row.gross = Gross income
+results.row.incomeTax = Income tax
+results.row.ni = National Insurance
+results.row.takeHome = Take-home pay
+results.updateAnswers = Update answers
+results.clearAndStart = Clear and start again

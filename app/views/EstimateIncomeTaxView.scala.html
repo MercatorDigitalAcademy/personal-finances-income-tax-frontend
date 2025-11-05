@@ -29,39 +29,60 @@ pageTitle = if (hasData) messages("estimateIncomeTax.title") else messages("star
 @if(hasData) {
 @* ---------------- RESULTS ---------------- *@
 
-<h1 class="govuk-heading-xl">@messages("estimateIncomeTax.heading")</h1>
+@defining(incomeOpt.get) { income =>
+@defining(taxYearOpt.get) { ty =>
+@defining(services.TaxCalculator.calculate(income)) { d =>
 
-@defining(services.TaxCalculator.calculate(incomeOpt.get)) { d =>
-<p class="govuk-body">
-    Tax year: <strong>@taxYearOpt.get</strong>
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+    @messages("results.heading", ty)
+</h1>
+<p class="govuk-body govuk-!-margin-bottom-6">
+    @messages("results.taxYear") <strong>@ty</strong>
 </p>
 
-<dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Gross income entered</dt>
-        <dd class="govuk-summary-list__value">@fmt.format(incomeOpt.get.bigDecimal)</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Income tax</dt>
-        <dd class="govuk-summary-list__value">@fmt.format(d.incomeTax.bigDecimal)</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">National Insurance</dt>
-        <dd class="govuk-summary-list__value">@fmt.format(d.nationalInsurance.bigDecimal)</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Net income</dt>
-        <dd class="govuk-summary-list__value"><strong>@fmt.format(d.netIncome.bigDecimal)</strong></dd>
-    </div>
-</dl>
-}
+@* Big green total panel *@
+<div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
+    <h2 class="govuk-panel__title">@fmt.format(d.netIncome.bigDecimal)</h2>
+    <div class="govuk-panel__body">@messages("results.per.year")</div>
+</div>
 
-@govukButton(
-Button(
-content = Text(messages("site.continue")),
-href    = Some(routes.TaxFormController.onPageLoad().url)
-)
-)
+
+<table class="govuk-table">
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages("results.row.gross")</th>
+        <td class="govuk-table__cell">@fmt.format(income.bigDecimal)</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages("results.row.incomeTax")</th>
+        <td class="govuk-table__cell">@fmt.format(d.incomeTax.bigDecimal)</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages("results.row.ni")</th>
+        <td class="govuk-table__cell">@fmt.format(d.nationalInsurance.bigDecimal)</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages("results.row.takeHome")</th>
+        <td class="govuk-table__cell"><strong>@fmt.format(d.netIncome.bigDecimal)</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="govuk-button-group">
+    <a class="govuk-button" href="@routes.CheckYourAnswersController.onPageLoad().url">
+        @messages("results.updateAnswers")
+    </a>
+</div>
+
+<p class="govuk-body">
+    <a class="govuk-link" href="@routes.TaxFormController.onPageLoad().url">
+        @messages("results.clearAndStart")
+    </a>
+</p>
+
+}}}
 
 } else {
 @* ---------------- START PAGE ---------------- *@
@@ -101,7 +122,7 @@ BreadcrumbsItem(content = Text(messages("start.bc.incomeTax")), href = Some("#")
 
 @govukButton(
 Button(
-content= Text(messages("site.startNow")),
+content       = Text(messages("site.startNow")),
 href          = Some(routes.TaxFormController.onPageLoad().url),
 isStartButton = true
 )
